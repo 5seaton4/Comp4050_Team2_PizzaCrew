@@ -16,29 +16,3 @@
 #Documentation
 
 - Documentation should be recorded within Confluence: "https://comp4050-team2.atlassian.net/wiki/spaces/PIZZACREW/overview"
-
-# MVP - CLI Application
-# Alpha / Beta: Application / Website?
-
-# ---------------------------------------------------------------------------------------------------
-
-#Roles
-#Scrum Master
-#Lead Developer - Jack
-#Developer -
-
-# Program needs to:
-
-#Definitely Have:
-  - Static analysis
-  - Run Lecturer defined JUnit tests
-  - Check exit code of exe.
-  - Repo quality control
-
-#Nice to Have:
- - Test objects creation and update it somehow
- - Test key presses call the correct object
- - Test events
- - Method isolation
- - Return types are correct
-
