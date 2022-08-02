@@ -10,7 +10,7 @@
 - Repo rules defined in Github:
   - no committing to master directly, need to branch and have a ticket reference in commit message.
 - Github actions:
-  - basic tests - JUNIT? Other test tooling software.
+  - basic tests - JUNIT?
 - Linting rules:
   - software coding standard defined and enforced via linting software.
   - Static analysis
@@ -28,20 +28,29 @@
 # Tests for repo:
  - Unit tests written by Devs and executed via Github Actions and locally.
  - End to end tests - Executed via Github Actions on commit.
- - Sanity tests? - Is this necessary.
 
 # MVP - CLI Application
 # Alpha / Beta: Application / Website?
 
 # ---------------------------------------------------------------------------------------------------
 
+#Roles
+#Scrum Master
+#Lead Developer - Jack
+#Developer -
+
 # Program needs to:
- - Run Unit tests
+
+#Definitely Have:
+  - Static analysis
+  - Run Lecturer defined JUnit tests
+  - Check exit code of exe.
+  - Repo quality control
+
+#Nice to Have:
  - Test objects creation and update it somehow
  - Test key presses call the correct object
  - Test events
  - Method isolation
  - Return types are correct
- - Static analysis correct.
- - No visual tests
- - Does not have to be from scratch
+
