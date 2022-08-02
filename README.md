@@ -2,32 +2,20 @@
 
 # Initial TODO (WIP)
 
-# Repository and Project Setup
+#Team Defined Repository and Software Coding Standards
 
-- Jira, confluence documentation, README
-- Team peer reviews:
-   - Pull requests - approved by all members before code being merged to master on approval and Github Actions test pass.
-- Repo rules defined in Github:
-  - no committing to master directly, need to branch and have a ticket reference in commit message.
-- Github actions:
-  - basic tests - JUNIT?
-- Linting rules:
-  - software coding standard defined and enforced via linting software.
-  - Static analysis
-- Git hooks:
-  - pre commit hooks
-  - pre push commits
-- Licencing:
-  - Apache
-- Dependency management:
-  - Not needed at this stage?
+- All code committed to the repository should be approved by all members of the team before being merged to master. This will be done via pull requests created when the work has been completed.
+- When a basic CI/CD implementation has been created, branches should not merge when tests fail.
+- Code should be written in a way which allows for Unit testing (if applicable) and Unit tests should be written for new features. These tests will then be executed via Github Actions.
+- When committing to the repository a JIRA ticket reference should be included in the commit message.
 
-# Chosen language:
- - Java
+#Repository Licencing
 
-# Tests for repo:
- - Unit tests written by Devs and executed via Github Actions and locally.
- - End to end tests - Executed via Github Actions on commit.
+- Apache
+
+#Documentation
+
+- Documentation should be recorded within Confluence: "https://comp4050-team2.atlassian.net/wiki/spaces/PIZZACREW/overview"
 
 # MVP - CLI Application
 # Alpha / Beta: Application / Website?
