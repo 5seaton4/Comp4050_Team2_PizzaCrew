@@ -9,6 +9,15 @@
 - Code should be written in a way which allows for Unit testing (if applicable) and Unit tests should be written for new features. These tests will then be executed via Github Actions.
 - When committing to the repository a JIRA ticket reference should be included in the commit message.
 
+Branches should be created in the following format:
+- feat/<JIRA_REF>/Ticket-Title
+- EX: feat/PIZ-19/Test-Ticket
+
+Commit message titles should have the format:
+- <JIRA_REF>: Message
+- EX: PIZ-19: Jira title message
+
+
 #Repository Licencing
 
 - Apache
