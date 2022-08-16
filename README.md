@@ -17,6 +17,12 @@
 - 3 team members will need to approve the pull request for the work to be merged into master. This is enforced via Git rules.
 - No committing to master directly.
 
+#Staging and Development Branches
+- The staging and development branches are there so that work that has been completed on multiple branches can be merged into this branch and tested together. Any issues can then branch off this branch and be fixed before being merged back in.
+- The development branch should be used first before
+- The staging environment which is meant to be used as a testing environment before work goes to production.
+- The latest master should be merged into these branches before other work is merged in.
+
 #Team Defined Repository and Software Coding Standards
 
 - All code committed to the repository should be approved by all members of the team before being merged to master. This will be done via pull requests created when the work has been completed.
