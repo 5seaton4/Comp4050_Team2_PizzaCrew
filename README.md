@@ -11,12 +11,17 @@
 
 Branches should be created in the following format:
 - feat/<JIRA_REF>/Ticket-Title
-- EX: feat/PIZ-19/Test-Ticket
+- Example: feat/PIZ-19/Test-Ticket
+- The prefix options are as follows:
+    - feat
+    - bug
+    - improvement
+    - release
+    - hotfix
 
 Commit message titles should have the format:
 - <JIRA_REF>: Message
 - EX: PIZ-19: Jira title message
-
 
 #Repository Licencing
 
