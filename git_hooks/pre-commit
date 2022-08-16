@@ -8,6 +8,12 @@ fi
 
 CURRENT_BRANCH_NAME=$(git symbolic-ref --short HEAD)
 
+if [ "$CURRENT_BRANCH_NAME" = "master" ];
+then
+    echo "You can't commit to master branch directly."
+    exit 1;
+fi
+
 BRANCH_EXCLUDED=$(printf "%s\n" "${SKIP_BRANCHES[@]}" | grep -c "^$CURRENT_BRANCH_NAME$")
 
 if [ "$BRANCH_EXCLUDED" -eq 1 ];
