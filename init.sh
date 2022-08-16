@@ -4,9 +4,15 @@
 set -e
 
 #NOTE(Jack): Using copy instead of symlinks to be compatible between OS.
-cp git_hooks/pre-commit .git/hooks/pre-commit
-cp git_hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+if test -f "git_hooks/pre-commit";
+then
+    cp git_hooks/pre-commit .git/hooks/pre-commit
+    #NOTE(Jack): Make the files executable.
+    chmod +x .git/hooks/pre-commit
+fi
 
-#NOTE(Jack): Make the files executable.
-chmod +x .git/hooks/pre-commit
-chmod +x .git/hooks/prepare-commit-msg
+if test -f "git_hooks/prepare-commit-msg";
+then
+    cp git_hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
+    chmod +x .git/hooks/prepare-commit-msg
+fi
