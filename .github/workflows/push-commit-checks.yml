@@ -1,4 +1,4 @@
-name: FormatAndPush
+name: Push-Commit-Checks
 
 on:
   workflow_call:
@@ -13,3 +13,9 @@ jobs:
       - uses: axel-op/googlejavaformat-action@v3
         with:
           args: "--skip-sorting-imports --replace"
+
+  run-repository-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./mvnw test
