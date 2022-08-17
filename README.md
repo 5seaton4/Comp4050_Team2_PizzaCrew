@@ -35,7 +35,7 @@ Information on Maven and its conventions can be found below.
 ### Committing Your Code
 
 - Any work done in the repository should be done in a branch off of master (or a branch with the needed changes).
-Once work is completed on this branch a pull request should be created which then need to get approved for the work to be merged into master.
+Once work is completed on this branch a pull request should be created which then needs to get approved for the work to be merged into master.
 - Branch naming convention is as follows (enforced via Git Hooks):
     - feat/<JIRA_REF>/Ticket-Title
     - Example: feat/PIZ-19/Test-Ticket
@@ -67,6 +67,10 @@ Maven also provides a nice testing framework that we can use to run our JUNIT te
     Keeping test source code in a separate, but parallel source tree
     Using test case naming conventions to locate and execute tests
     Having test cases setup their environment instead of customizing the build for test preparation
+
+Here is a good starter guide on Maven:
+
+    https://spring.io/guides/gs/maven/#scratch
 
 #### Maven Testing Conventions
 
