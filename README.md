@@ -28,6 +28,10 @@ If you wish to package the code you can run the command:
 
         ./mvnw package
 
+If you wish to run the tests in the repository:
+
+        ./mvnw test 
+
 Information on Maven and its conventions can be found below.
 
 ## Repository Information
@@ -74,7 +78,9 @@ Here is a good starter guide on Maven:
 
 #### Maven Testing Conventions
 
+Mavens convention for tests is that they should be located in the src/test/java/<package> directory. Any file with a name matching *Test in these directories will run with the following command:
 
+    ./mvnw test
 
 # Team Defined Repository and Software Coding Standards
 
