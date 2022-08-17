@@ -52,9 +52,25 @@ Once work is completed on this branch a pull request should be created which the
 
 ### Maven
 
+    https://maven.apache.org/what-is-maven.html
+
+Maven is a build management tool which will allow us to build our project consistently and standardised between OS. It will also handle package management and various other problems. Maven defines itself on its website as:
+
+    Making the build process easy
+    Providing a uniform build system
+    Providing quality project information
+    Encouraging better development practices
+
+Maven also provides a nice testing framework that we can use to run our JUNIT tests. It provides the following testing features:
+
+    Unit test reports including coverage
+    Keeping test source code in a separate, but parallel source tree
+    Using test case naming conventions to locate and execute tests
+    Having test cases setup their environment instead of customizing the build for test preparation
+
 #### Maven Testing Conventions
 
-TODO
+
 
 # Team Defined Repository and Software Coding Standards
 
