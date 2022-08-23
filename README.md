@@ -28,6 +28,10 @@ If you wish to package the code you can run the command:
 
         ./mvnw package
 
+If you wish to run the tests in the repository:
+
+        ./mvnw test
+
 Information on Maven and its conventions can be found below.
 
 ## Repository Information
@@ -74,13 +78,16 @@ Here is a good starter guide on Maven:
 
 #### Maven Testing Conventions
 
+Mavens convention for tests is that they should be located in the src/test/java/<package> directory. Any file with a name matching *Test in these directories will run with the following command:
 
+    ./mvnw test
 
 # Team Defined Repository and Software Coding Standards
 
 - Code will be automatically formatted when work is pushed into the remote repository via Github Actions. The code is formatted in the Google Java Style: https://google.github.io/styleguide/javaguide.html
 
-- When a basic CI/CD implementation has been created, branches should not merge when tests fail.
+- When a push to the remote repository is done, JUNIT tests will run via Github Actions if the tests fail the branch will not be able to be merged into master.
+
 - Code should be written in a way which allows for Unit testing (if applicable) and Unit tests should be written for new features. These tests will then be executed via Github Actions.
 - Tests that are written should be in the directory src/test/* mimicing the src/main/* pathway of the file being tested. This will allow Maven to find and run your defined tests.
 
