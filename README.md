@@ -85,10 +85,16 @@ Mavens convention for tests is that they should be located in the src/test/java/
 # Team Defined Repository and Software Coding Standards
 
 - Code will be automatically formatted when work is pushed into the remote repository via Github Actions. The code is formatted in the Google Java Style: https://google.github.io/styleguide/javaguide.html
-
 - When a basic CI/CD implementation has been created, branches should not merge when tests fail.
 - Code should be written in a way which allows for Unit testing (if applicable) and Unit tests should be written for new features. These tests will then be executed via Github Actions.
 - Tests that are written should be in the directory src/test/* mimicing the src/main/* pathway of the file being tested. This will allow Maven to find and run your defined tests.
+
+# Staging and Development Branches
+
+- The staging and development branches are there so that work that has been completed on multiple branches can be merged into this branch and tested together. Any issues can then branch off this branch and be fixed before being merged back in.
+- The development branch should be used first before
+- The staging environment which is meant to be used as a testing environment before work goes to production.
+- The latest master should be merged into these branches before other work is merged in.
 
 # Repository Licencing
 
