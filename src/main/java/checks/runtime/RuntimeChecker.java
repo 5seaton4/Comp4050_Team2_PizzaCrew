@@ -13,6 +13,9 @@ import java.io.IOException;
  **/
 public class RuntimeChecker {
 
+    //In milliseconds - 3000 ms = 3s
+    private static int PROGRAM_RUN_TIME = 3000;
+
     //The relative location of the executable being tested.
     private String pathToExecutable;
 
@@ -60,7 +63,7 @@ public class RuntimeChecker {
 
             try {
                 //Sleep the thread for 3 seconds, to allow the program to execute.
-                Thread.sleep(3000);
+                Thread.sleep(PROGRAM_RUN_TIME);
             } catch (InterruptedException e) {
                 //Thread has been interrupted, something has gone wrong.
                 success = false;
