@@ -1,0 +1,34 @@
+#!/bin/bash
+
+echo "In pre-commit hook."
+
+if [ -z "$SKIP_BRANCHES" ]; then
+    SKIP_BRANCHES=(master staging development)
+fi
+
+CURRENT_BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+if [ "$CURRENT_BRANCH_NAME" = "master" ];
+then
+    echo "You can't commit to master branch directly."
+    exit 1;
+fi
+
+BRANCH_EXCLUDED=$(printf "%s\n" "${SKIP_BRANCHES[@]}" | grep -c "^$CURRENT_BRANCH_NAME$")
+
+if [ "$BRANCH_EXCLUDED" -eq 1 ];
+then
+    exit 0;
+fi
+
+VALID_BRANCH_REGEX="^(feat|bug|improvement|release|hotfix)\/PIZ+-[0-9]+"
+
+ERROR_MESSAGE="Branch name is invalid. Branch names must be this regex: $VALID_BRANCH_REGEX. Your commit has been rejected. Rename your branch and try again."
+
+if [[ ! $CURRENT_BRANCH_NAME =~ $VALID_BRANCH_REGEX ]]
+then
+    echo "$ERROR_MESSAGE"
+    exit 1
+fi
+
+exit 0

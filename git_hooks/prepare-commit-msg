@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "In prepare-commit-msg hook."
+
+CURRENT_BRANCH_NAME=$(git symbolic-ref --short HEAD)
+
+REGEX="[a-zA-Z0-9,\.\_\-]+-[0-9]+"
+
+JIRA_TICKET_ID=$(echo $CURRENT_BRANCH_NAME | grep -o -E "$REGEX")
+echo "JIRA issue extracted from branch name: $JIRA_TICKET_ID"
+echo "$JIRA_TICKET_ID"': '$(cat "$1") > "$1"
