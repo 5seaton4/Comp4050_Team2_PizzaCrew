@@ -78,7 +78,7 @@ Here is a good starter guide on Maven:
 
 # Team Defined Repository and Software Coding Standards
 
-- Google formatter TODO
+- Code will be automatically formatted when work is pushed into the remote repository via Github Actions. The code is formatted in the Google Java Style: https://google.github.io/styleguide/javaguide.html
 
 - When a basic CI/CD implementation has been created, branches should not merge when tests fail.
 - Code should be written in a way which allows for Unit testing (if applicable) and Unit tests should be written for new features. These tests will then be executed via Github Actions.
