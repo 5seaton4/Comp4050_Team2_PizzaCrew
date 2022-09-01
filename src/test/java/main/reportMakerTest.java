@@ -2,7 +2,7 @@ package main;
 
 // Assistance from https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/
 
-import au.com.bytecode.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
 import org.junit.Test;
 
 import java.io.File;

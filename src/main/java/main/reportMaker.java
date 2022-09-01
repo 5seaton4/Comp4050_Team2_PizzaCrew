@@ -2,13 +2,19 @@ package main;
 
 // Assistance from https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/
 
-import java.io.*;
-import java.util.*;
-import au.com.bytecode.opencsv.CSVWriter;
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 // todo current worst case is that StudentID or results are NULL -> prints "NULL"
 public class reportMaker {
     static String StudentID;
     static ArrayList<testResultObject> results = new ArrayList<testResultObject>();
+
     private static final String CSV_FILE_PATH
             = "./result.csv"; // todo discuss appropriate filepath for result.csv
     public static void main(String[] args)
