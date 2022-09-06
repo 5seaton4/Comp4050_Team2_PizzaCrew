@@ -14,8 +14,9 @@ public class Main {
   }
 
   public Main() {
-    //TODO currently hardcoding the location of the exe.
-//    runtimeCheck("/Volumes/projects/Comp4050_Team2_PizzaCrew/test_artifacts/sample_test/macos-x86_64/Flocking.app/Contents/MacOS/Flocking");
+    // TODO currently hardcoding the location of the exe.
+    //
+    // runtimeCheck("/Volumes/projects/Comp4050_Team2_PizzaCrew/test_artifacts/sample_test/macos-x86_64/Flocking.app/Contents/MacOS/Flocking");
   }
 
   private void runtimeCheck(String executableLocation) {
@@ -23,7 +24,7 @@ public class Main {
     System.out.println("Runtime Check - Checking that the program does not crash.");
 
     RuntimeChecker runtimeCheck = new RuntimeChecker(executableLocation);
-    if(!runtimeCheck.doesExecutableExist()) {
+    if (!runtimeCheck.doesExecutableExist()) {
       System.err.println("Error - Executable does not exist.");
       return;
     }
