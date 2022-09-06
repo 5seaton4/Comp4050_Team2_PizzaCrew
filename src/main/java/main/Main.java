@@ -21,8 +21,18 @@ public class Main {
   }
 
   private void StaticAnalysisCheck() {
-    String executableLocation = "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh";
-    String arguments[] = {"/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh", "pmd", "-d", "/Volumes/projects/Comp4050_Team2_PizzaCrew/temp", "-R", "rulesets/java/quickstart.xml", "-f", "text"};
+    String executableLocation =
+        "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh";
+    String arguments[] = {
+      "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh",
+      "pmd",
+      "-d",
+      "/Volumes/projects/Comp4050_Team2_PizzaCrew/temp",
+      "-R",
+      "rulesets/java/quickstart.xml",
+      "-f",
+      "text"
+    };
 
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker(executableLocation);
     if (!staticAnalysis.doesExecutableExist()) {

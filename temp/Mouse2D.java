@@ -4,44 +4,36 @@ import processing.data.*;
 import processing.event.*;
 import processing.opengl.*;
 
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.PrintWriter;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
 
 public class Mouse2D extends PApplet {
 
-/**
- * Mouse 2D. 
- * 
- * Moving the mouse changes the position and size of each box. 
- */
- 
- public void setup() {
-  /* size commented out by preprocessor */; 
-  noStroke();
-  rectMode(CENTER);
-}
+  /**
+   * Mouse 2D.
+   *
+   * <p>Moving the mouse changes the position and size of each box.
+   */
+  public void setup() {
+    /* size commented out by preprocessor */ ;
+    noStroke();
+    rectMode(CENTER);
+  }
 
- public void draw() {
-  background(51); 
-  fill(255, 204);
-  rect(mouseX, height/2, mouseY/2+10, mouseY/2+10);
-  fill(255, 204);
-  int inverseX = width-mouseX;
-  int inverseY = height-mouseY;
-  rect(inverseX, height/2, (inverseY/2)+10, (inverseY/2)+10);
-}
+  public void draw() {
+    background(51);
+    fill(255, 204);
+    rect(mouseX, height / 2, mouseY / 2 + 10, mouseY / 2 + 10);
+    fill(255, 204);
+    int inverseX = width - mouseX;
+    int inverseY = height - mouseY;
+    rect(inverseX, height / 2, (inverseY / 2) + 10, (inverseY / 2) + 10);
+  }
 
+  public void settings() {
+    size(640, 360);
+  }
 
-  public void settings() { size(640, 360); }
-
-  static public void main(String[] passedArgs) {
-    String[] appletArgs = new String[] { "Mouse2D" };
+  public static void main(String[] passedArgs) {
+    String[] appletArgs = new String[] {"Mouse2D"};
     if (passedArgs != null) {
       PApplet.main(concat(appletArgs, passedArgs));
     } else {
