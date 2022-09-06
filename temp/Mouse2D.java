@@ -4,7 +4,6 @@ import processing.data.*;
 import processing.event.*;
 import processing.opengl.*;
 
-
 public class Mouse2D extends PApplet {
 
   /**
