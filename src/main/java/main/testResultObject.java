@@ -7,7 +7,6 @@ public class testResultObject {
   float result; // result of test mark, out of 100
   int orderOfAppearance; // appearance order of the test
 
-
   String returnFormatted() {
     // find a *neat* way of checking all variables have been instantiated before running this
     // method.
