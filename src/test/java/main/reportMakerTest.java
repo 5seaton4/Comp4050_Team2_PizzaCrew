@@ -34,7 +34,7 @@ public class reportMakerTest {
   public static void addDataToCSV(
       String
           output) { // todo check validity of "results" before running this method? Shouldn't be a
-                    // case where not valid by *this point* but ¯\_(ツ)_/¯
+    // case where not valid by *this point* but ¯\_(ツ)_/¯
     File file = new File(output);
     try {
       FileWriter outputfile = new FileWriter(file);
