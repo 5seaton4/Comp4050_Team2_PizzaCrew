@@ -65,8 +65,7 @@ public class reportMakerTest {
                 + results.get(i).value
                 + "% ; Mark received: "
                 + results.get(i).result
-                + " ; Contribution to total mark: "
-                + results.get(i).result * (results.get(i).value / 100));
+                );
         String[] rowdata = row.split(" ");
         data.add(rowdata);
       }
@@ -88,7 +87,7 @@ public class reportMakerTest {
     test1.name = "Object 1 output test";
     test1.desc = "Description of test";
     test1.value = 30;
-    test1.result = 63;
+    test1.result = true;
     test1.orderOfAppearance = 1;
     addDataToReport(test1);
     addDataToCSV("./testresult.csv");

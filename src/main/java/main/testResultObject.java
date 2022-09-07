@@ -4,7 +4,7 @@ public class testResultObject {
   String name; // name of JUNIT test (if provided and relevant)
   String desc; // description of JUNIT test (if provided and relevant)
   float value; // mark value of JUNIT test
-  float result; // result of test mark, out of 100
+  boolean result; // result of test mark, pass or fail (true/false)
   int orderOfAppearance; // appearance order of the test
 
   String returnFormatted() {
@@ -18,7 +18,6 @@ public class testResultObject {
         + value
         + "% ; Mark received: "
         + result
-        + " ; Contribution to total mark: "
-        + result * (value / 100));
+        );
   }
 }
