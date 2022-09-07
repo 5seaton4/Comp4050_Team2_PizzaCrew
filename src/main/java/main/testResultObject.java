@@ -17,7 +17,6 @@ public class testResultObject {
         + " ; Value: "
         + value
         + "% ; Mark received: "
-        + result
-        );
+        + result);
   }
 }

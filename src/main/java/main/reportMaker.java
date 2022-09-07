@@ -29,7 +29,8 @@ public class reportMaker {
   }
 
   public static void addDataToCSV(
-      String output) { // todo check validity of "results" before running this method? Shouldn't be a
+      String
+          output) { // todo check validity of "results" before running this method? Shouldn't be a
     // case where not valid by *this point* but ¯\_(ツ)_/¯
     File file = new File(output);
     try {
@@ -60,8 +61,7 @@ public class reportMaker {
                 + " ; Value: "
                 + results.get(i).value
                 + "% ; Mark received: "
-                + results.get(i).result
-                );
+                + results.get(i).result);
         String[] rowdata = row.split(" ");
         data.add(rowdata);
       }
