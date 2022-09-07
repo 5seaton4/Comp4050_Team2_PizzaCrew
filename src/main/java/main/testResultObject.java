@@ -7,16 +7,6 @@ public class testResultObject {
   float result; // result of test mark, out of 100
   int orderOfAppearance; // appearance order of the test
 
-  public static void main(String[] args) {
-    testResultObject tRO = new testResultObject();
-    tRO.name = "Object 1 output test";
-    tRO.desc = "Description of test";
-    tRO.value = 30;
-    tRO.result = 63;
-    tRO.orderOfAppearance = 1;
-    System.out.println(tRO.returnFormatted());
-  }
-
   String returnFormatted() {
     // find a *neat* way of checking all variables have been instantiated before running this
     // method.
