@@ -64,8 +64,7 @@ public class reportMakerTest {
                 + " ; Value: "
                 + results.get(i).value
                 + "% ; Mark received: "
-                + results.get(i).result
-                );
+                + results.get(i).result);
         String[] rowdata = row.split(" ");
         data.add(rowdata);
       }
