@@ -5,7 +5,6 @@ import processing.data.*;
 import processing.event.*;
 import processing.opengl.*;
 
-
 public class MarchPenguin extends PApplet {
 
   /* A march of the Penguins animation

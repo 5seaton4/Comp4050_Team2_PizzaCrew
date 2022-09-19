@@ -22,7 +22,6 @@ public class reportMaker {
     addDataToCSV(CSV_FILE_PATH);
   }
 
-
   public static void addDataToReport(
       testResultObject
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
@@ -30,7 +29,8 @@ public class reportMaker {
   }
 
   public static void addDataToCSV(
-      String output) { // todo check validity of "results" before running this method? Shouldn't be a
+      String
+          output) { // todo check validity of "results" before running this method? Shouldn't be a
     // case where not valid by *this point* but ¯\_(ツ)_/¯
     File file = new File(output);
     try {
@@ -53,8 +53,7 @@ public class reportMaker {
 
       for (int i = 0; i < noOfRow; i++) {
         // collect data from testResultObject(s)
-        String row =
-            (results.get(i).returnFormatted());
+        String row = (results.get(i).returnFormatted());
         String[] rowdata = row.split(" ");
         data.add(rowdata);
       }

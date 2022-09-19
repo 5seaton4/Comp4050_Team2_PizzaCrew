@@ -13,8 +13,9 @@ public class testResultObject {
     String passOrFail;
     if (result == true) {
       passOrFail = "Pass";
+    } else {
+      passOrFail = "Fail";
     }
-    else {passOrFail = "Fail";}
     return ("Test: "
         + orderOfAppearance
         + " ; "
@@ -22,7 +23,6 @@ public class testResultObject {
         + " ; Value: "
         + value
         + "% ; Mark received: "
-        + passOrFail
-        );
+        + passOrFail);
   }
 }
