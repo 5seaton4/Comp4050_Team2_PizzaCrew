@@ -22,6 +22,7 @@ public class reportMaker {
     addDataToCSV(CSV_FILE_PATH);
   }
 
+
   public static void addDataToReport(
       testResultObject
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
@@ -53,15 +54,7 @@ public class reportMaker {
       for (int i = 0; i < noOfRow; i++) {
         // collect data from testResultObject(s)
         String row =
-            ("Test: "
-                + results.get(i).orderOfAppearance
-                + " ; "
-                + results.get(i).desc
-                + " ; Value: "
-                + results.get(i).value
-                + "% ; Mark received: "
-                + results.get(i).result
-                );
+            (results.get(i).returnFormatted());
         String[] rowdata = row.split(" ");
         data.add(rowdata);
       }
