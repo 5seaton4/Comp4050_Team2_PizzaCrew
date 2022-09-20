@@ -6,7 +6,7 @@ public class Config {
   float result;
   int orderOfAppearance;
 
-  public Config(String name, String desc, float result) {
+  public Config (String name, String desc, float result) {
     this.name = name;
     this.desc = desc;
     this.result = result;
