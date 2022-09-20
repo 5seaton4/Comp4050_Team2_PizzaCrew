@@ -1,0 +1,150 @@
+package main;
+
+import org.apache.commons.cli.*;
+import reporting.ReportMaker;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+public class Utils {
+    public static void parseCommandLineArguments(String[] args, Config config)
+    {
+        Options options = new Options();
+        Option processingLocation = new Option("p", "processing-java-location", true, "Processing exe location");
+        processingLocation.setRequired(true);
+        options.addOption(processingLocation);
+
+        Option projectLocation = new Option("t", "project-location", true, "Processing project to be tested location");
+        projectLocation.setRequired(true);
+        options.addOption(projectLocation);
+
+        Option studentIdOption = new Option ("s", "student-id", true, "Student ID");
+        studentIdOption.setRequired(false);
+        options.addOption(studentIdOption);
+
+        CommandLineParser parser = new DefaultParser();
+        HelpFormatter formatter = new HelpFormatter();
+        CommandLine cmd = null;
+
+        try
+        {
+            cmd = parser.parse(options, args);
+        } catch (ParseException e)
+        {
+            System.out.println(e.getMessage());
+            formatter.printHelp("utility-name", options);
+            System.exit(1);
+        }
+
+        String processingFileLocation = cmd.getOptionValue("processing-java-location");
+        String projectDir = cmd.getOptionValue("project-location");
+        String studentId = cmd.getOptionValue("student-id");
+
+        //Check the locations are valid.
+        File processingExe = new File(processingFileLocation);
+        File projectFile = new File(projectDir);
+        if (!processingExe.isFile())
+        {
+            System.err.println("Error processing-java-location passed in does not exist or is a directory.");
+            System.exit(1);
+        }
+
+        if (!projectFile.isDirectory())
+        {
+            System.err.println("Error project location passed in does not exist or is not a directory.");
+            System.exit(1);
+        }
+
+        config.setProcessingLocation(processingFileLocation);
+        config.setProjectDirectory(projectDir);
+        if(studentId != null)
+        {
+            ReportMaker.STUDENT_ID = studentId;
+        }
+    }
+
+    public static void exportProcessingCodeToJava(Config config)
+    {
+        System.out.println("Exporting processing code to Java.");
+
+        String platform = "windows";
+        if (config.isMac())
+        {
+            platform = "macosx";
+        }
+
+        //Create a temp directory for the java code.
+        Path tempPath = Paths.get(config.getTempLocation());
+
+        String[] arguments = {
+                config.getProcessingLocation(),
+                "--sketch=" + config.getProjectDirectory(),
+                "--output=" + tempPath.toString(),
+                "--export",
+                "--force",
+                "--variant=" + platform
+        };
+
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            // Run the executable.
+            Process process = runtime.exec(arguments);
+
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            // Read the output from the command
+            System.out.println("Processing export output: \n");
+            String s = null;
+            while ((s = stdInput.readLine()) != null) {
+                System.out.println(s);
+            }
+
+            // Read any errors from the attempted command
+            System.out.println("Process errors of the command (if any):\n");
+            while ((s = stdError.readLine()) != null) {
+                System.out.println(s);
+            }
+
+            System.out.println("Closing process.");
+            process.destroy();
+
+            Utils.getAppNameFromExecutable(config);
+        }
+        catch (IOException e)
+        {
+            // TODO(Jack): Error handling
+            e.printStackTrace();
+        }
+    }
+
+    private static void getAppNameFromExecutable(Config config)
+    {
+        File directory = new File(config.getTempLocation());
+        String contents[] = directory.list();
+        boolean found = false;
+        for(String folder : contents)
+        {
+            System.out.println(folder);
+            if(folder.contains(".app") || folder.contains(".exe"))
+            {
+                int endIndex = folder.lastIndexOf(".");
+                config.setProjectName(folder.substring(0, endIndex));
+                found = true;
+                break;
+            }
+        }
+
+        if(!found)
+        {
+            System.err.println("Failed to find project name from export java files.");
+            System.exit(1);
+        }
+    }
+}
+
+

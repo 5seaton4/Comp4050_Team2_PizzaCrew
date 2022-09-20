@@ -1,70 +1,95 @@
 package main;
 
+import checks.junit.JUnitHelper;
+import reporting.TestResult;
 import checks.runtime.RuntimeChecker;
 import checks.static_analysis.StaticAnalysisChecker;
+import reporting.ReportMaker;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+//TODO change all function and variable names to be consistent.
+//TODO Update README
+//TODO working on Windows.
+
+//TODO processing-java must be installed
+
+//TODO test coverage.
+//TODO comments.
 
 public class Main {
 
-  public int basicTest() {
-    return 5;
-  }
-
   public static void main(String[] args) {
-    System.out.println("Hello World!");
-    /* This code is an example of running the tests from beginning to end for PIZ-09
-    reportMaker.StudentID = "45956022";
-    testResultObject teo1 = new testResultObject();
-    testResultObject teo2 = new testResultObject();
-    JUnitHelper.runtests(teo1, teo2);
-    reportMaker.addDataToReport(teo1);
-    reportMaker.addDataToReport(teo2);
-    reportMaker.addDataToCSV("./result.csv");
-    */
-    new Main();
+    new Main(args);
   }
 
-  public Main() {
-    // TODO currently hardcoding the location of the exe
-    StaticAnalysisCheck();
-    // runtimeCheck("/Volumes/projects/Comp4050_Team2_PizzaCrew/test_artifacts/sample_test/macos-x86_64/Flocking.app/Contents/MacOS/Flocking");
+  private void setup(String args[], Config config)
+  {
+    Utils.parseCommandLineArguments(args, config);
+    config.checkOS();
+    Utils.exportProcessingCodeToJava(config);
   }
 
-  private void StaticAnalysisCheck() {
-    String executableLocation =
-        "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh";
-    String arguments[] = {
-      "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh",
-      "pmd",
-      "-d",
-      "/Volumes/projects/Comp4050_Team2_PizzaCrew/temp",
-      "-R",
-      "rulesets/java/quickstart.xml",
-      "-f",
-      "text"
-    };
+  public Main(String[] args) {
+    Config config = new Config();
+    setup(args, config);
 
-    StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker(executableLocation);
-    if (!staticAnalysis.doesExecutableExist()) {
-      System.err.println("Error - Executable does not exist.");
-      return;
-    }
+    runtimeCheck(config);
+    staticAnalysisCheck(config);
+    runJUNITTests();
 
-    staticAnalysis.runExecutableWithArguments(arguments);
+    System.out.println("Generating a CSV containing the results.");
+    ReportMaker.addDataToCSV(config.RESULT_CSV_LOCATION);
+
+    //Clean up the temporary folder.
+    config.removeTemporaryFolder();
   }
 
-  private void runtimeCheck(String executableLocation) {
+  //TODO we need to pass in JUNIT tests and have them run on the exported processing code.
+  private void runJUNITTests()
+  {
+    TestResult teo1 = new TestResult();
+    TestResult teo2 = new TestResult();
+
+    JUnitHelper.runTests(teo1, teo2);
+    ReportMaker.addDataToReport(teo1);
+    ReportMaker.addDataToReport(teo2);
+  }
+
+  private void staticAnalysisCheck(Config config)
+  {
+    System.out.println("Static Analysis - Running static analysis tooling over the code.");
+
+    StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
+
+    //TODO these arguments need configuring.
+    ArrayList<String> arguments = new ArrayList<String>(
+    Arrays.asList( "pmd",
+            "-d",
+            config.getTempLocation(),
+            "-R",
+            "rulesets/java/quickstart.xml",
+            "-f",
+            "text"));
+
+    //TODO this needs to capture the output to determine if its passed or failed, and then add it to the results.
+    staticAnalysis.runExecutableWithArguments(config, arguments);
+  }
+
+  private void runtimeCheck(Config config) {
 
     System.out.println("Runtime Check - Checking that the program does not crash.");
-
-    RuntimeChecker runtimeCheck = new RuntimeChecker(executableLocation);
-    if (!runtimeCheck.doesExecutableExist()) {
-      System.err.println("Error - Executable does not exist.");
-      return;
-    }
-
-    boolean result = runtimeCheck.runExecutable();
+    RuntimeChecker runtimeCheck = new RuntimeChecker();
+    boolean result = runtimeCheck.runExecutable(config);
 
     System.out.println("Results: ");
     System.out.println("\tSuccess: " + result);
+
+    TestResult testResult = new TestResult();
+    testResult.name = "Runtime Check";
+    testResult.desc = "The program is run to ascertain whether there is any runtime errors.";
+    testResult.result = true;
+    ReportMaker.addDataToReport(testResult);
   }
 }
