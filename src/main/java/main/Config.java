@@ -28,9 +28,8 @@ public class Config {
 
   public Config() {}
 
-  public void getWorkingDirectory() 
-  {
-   // Get directory of executable, which we can then use to extrapolate where the dependencies are.
+  public void getWorkingDirectory() {
+    // Get directory of executable, which we can then use to extrapolate where the dependencies are.
     String path = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     try {
       String decodedPath = URLDecoder.decode(path, "UTF-8");
@@ -38,13 +37,13 @@ public class Config {
 
       String workingDir = decodedPath.substring(0, endIndex);
 
-      //Windows doesn't behave with the path calculated above.
+      // Windows doesn't behave with the path calculated above.
       if (isWindows()) {
-        workingDir = workingDir.substring(1);    
+        workingDir = workingDir.substring(1);
       }
-      
+
       setJarLocation(workingDir);
-  
+
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
@@ -105,15 +104,13 @@ public class Config {
     this.jarLocation = jarLocation;
     this.tempLocation = this.jarLocation + "/" + TEMP_DIRECTORY_NAME;
 
-    String staticAnalysisLocationBuilder = this.jarLocation + "/" + STATIC_ANALYSIS_RELATIVE_LOCATION;
-    
-    //TODO this should be moved into constants.
-    if(isMac())
-    {
+    String staticAnalysisLocationBuilder =
+        this.jarLocation + "/" + STATIC_ANALYSIS_RELATIVE_LOCATION;
+
+    // TODO this should be moved into constants.
+    if (isMac()) {
       staticAnalysisLocationBuilder += "run.sh";
-    }
-    else if(isWindows())
-    {
+    } else if (isWindows()) {
       staticAnalysisLocationBuilder += "pmd.bat";
     }
 

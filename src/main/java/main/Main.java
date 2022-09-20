@@ -71,8 +71,7 @@ public class Main {
                 "-f",
                 "text"));
 
-    if (config.isMac())
-    {
+    if (config.isMac()) {
       arguments.add(0, "pmd");
     }
 
