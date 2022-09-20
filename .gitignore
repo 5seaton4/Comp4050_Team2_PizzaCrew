@@ -1,6 +1,6 @@
-target
-target/*
-target/
+target/**
+!target/tools/
+!target/tools/**
 *.class
 *.DS_Store
 hawaiian.iml
