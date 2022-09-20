@@ -1,4 +1,7 @@
+target
+target/*
 target/
+*.class
 *.DS_Store
 hawaiian.iml
 *.xml
