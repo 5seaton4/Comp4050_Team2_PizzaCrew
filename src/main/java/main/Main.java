@@ -1,6 +1,7 @@
 package main;
 
 import checks.runtime.RuntimeChecker;
+import checks.static_analysis.StaticAnalysisChecker;
 
 public class Main {
 
@@ -10,13 +11,45 @@ public class Main {
 
   public static void main(String[] args) {
     System.out.println("Hello World!");
+    /* This code is an example of running the tests from beginning to end for PIZ-09
+    reportMaker.StudentID = "45956022";
+    testResultObject teo1 = new testResultObject();
+    testResultObject teo2 = new testResultObject();
+    JUnitHelper.runtests(teo1, teo2);
+    reportMaker.addDataToReport(teo1);
+    reportMaker.addDataToReport(teo2);
+    reportMaker.addDataToCSV("./result.csv");
+    */
     new Main();
   }
 
   public Main() {
-    // TODO currently hardcoding the location of the exe.
-    //
+    // TODO currently hardcoding the location of the exe
+    StaticAnalysisCheck();
     // runtimeCheck("/Volumes/projects/Comp4050_Team2_PizzaCrew/test_artifacts/sample_test/macos-x86_64/Flocking.app/Contents/MacOS/Flocking");
+  }
+
+  private void StaticAnalysisCheck() {
+    String executableLocation =
+        "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh";
+    String arguments[] = {
+      "/Volumes/projects/Comp4050_Team2_PizzaCrew/tools/pmd-bin-6.49.0/bin/run.sh",
+      "pmd",
+      "-d",
+      "/Volumes/projects/Comp4050_Team2_PizzaCrew/temp",
+      "-R",
+      "rulesets/java/quickstart.xml",
+      "-f",
+      "text"
+    };
+
+    StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker(executableLocation);
+    if (!staticAnalysis.doesExecutableExist()) {
+      System.err.println("Error - Executable does not exist.");
+      return;
+    }
+
+    staticAnalysis.runExecutableWithArguments(arguments);
   }
 
   private void runtimeCheck(String executableLocation) {
