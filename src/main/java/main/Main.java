@@ -9,7 +9,6 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// TODO change all function and variable names to be consistent.
 // TODO Update README
 // TODO working on Windows.
 

@@ -34,6 +34,16 @@ If you wish to run the tests in the repository:
 
 Information on Maven and its conventions can be found below.
 
+### 3. How to run the application
+
+To run the application you can go into the target/ directory and run the JAR file using Java.
+An example command with the required arguments is:
+
+        java -jar hawaiian-0.1.0.jar -p "/Users/Jack/processing-java" -t "/Users/Jack/Documents/Processing/Flocking"
+
+
+You must have processing-java installed to install it open Processing then Tools and select 'Install process-java'.
+
 ## Repository Information
 
 ### Committing Your Code
