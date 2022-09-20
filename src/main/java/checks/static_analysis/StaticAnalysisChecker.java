@@ -8,15 +8,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class StaticAnalysisChecker {
 
   private String pathToExecutable;
 
-  public StaticAnalysisChecker()
-  {
-  }
+  public StaticAnalysisChecker() {}
 
   public boolean doesExecutableExist() {
     File executable = new File(pathToExecutable);
@@ -27,8 +24,7 @@ public class StaticAnalysisChecker {
     }
   }
 
-  public void runExecutableWithArguments(Config config, ArrayList<String> arguments)
-  {
+  public void runExecutableWithArguments(Config config, ArrayList<String> arguments) {
     pathToExecutable = config.getStaticAnalysisLocation();
 
     if (!doesExecutableExist()) {
@@ -42,8 +38,9 @@ public class StaticAnalysisChecker {
     try {
       Runtime runtime = Runtime.getRuntime();
       // Run the executable.
-      //TODO convoluted way of turning an ArrayList into an array..
-      Process process = runtime.exec(Arrays.copyOf(arguments.toArray(), arguments.size(), String[].class));
+      // TODO convoluted way of turning an ArrayList into an array..
+      Process process =
+          runtime.exec(Arrays.copyOf(arguments.toArray(), arguments.size(), String[].class));
 
       BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));

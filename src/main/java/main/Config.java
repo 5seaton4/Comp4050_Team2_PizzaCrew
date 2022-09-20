@@ -2,10 +2,7 @@ package main;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Config {
   private String processingLocation;
@@ -23,14 +20,14 @@ public class Config {
   enum OS_TYPE {
     WINDOWS,
     MAC,
-    //TODO currently not supported.
+    // TODO currently not supported.
     LINUX
   }
+
   private OS_TYPE platform;
 
-  public Config ()
-  {
-    //Get directory of executable, which we can then use to extrapolate where the dependencies are.
+  public Config() {
+    // Get directory of executable, which we can then use to extrapolate where the dependencies are.
     String path = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     try {
       String decodedPath = URLDecoder.decode(path, "UTF-8");
@@ -53,13 +50,11 @@ public class Config {
     }
   }
 
-  public void removeTemporaryFolder()
-  {
+  public void removeTemporaryFolder() {
     removeFolderRecursively(new File(this.tempLocation));
   }
 
-  private void removeFolderRecursively(File directoryToBeDeleted)
-  {
+  private void removeFolderRecursively(File directoryToBeDeleted) {
     File[] allContents = directoryToBeDeleted.listFiles();
     if (allContents != null) {
       for (File file : allContents) {
@@ -70,75 +65,61 @@ public class Config {
     directoryToBeDeleted.delete();
   }
 
-  public String getStaticAnalysisLocation()
-  {
+  public String getStaticAnalysisLocation() {
     return this.staticAnalysisLocation;
   }
 
-  public String getProjectName()
-  {
+  public String getProjectName() {
     return this.projectName;
   }
 
-  public void setProjectName(String projectName)
-  {
+  public void setProjectName(String projectName) {
     this.projectName = projectName;
   }
 
-  public boolean isMac()
-  {
+  public boolean isMac() {
     return platform == OS_TYPE.MAC;
   }
 
-  public boolean isWindows()
-  {
+  public boolean isWindows() {
     return platform == OS_TYPE.WINDOWS;
   }
 
-  public String getTempLocation()
-  {
+  public String getTempLocation() {
     return this.tempLocation;
   }
 
-  public void setJarLocation(String jarLocation)
-  {
+  public void setJarLocation(String jarLocation) {
     this.jarLocation = jarLocation;
     this.tempLocation = this.jarLocation + "/" + TEMP_DIRECTORY_NAME;
     this.staticAnalysisLocation = this.jarLocation + "/" + STATIC_ANALYSIS_RELATIVE_LOCATION;
   }
 
-  public String getJarLocation()
-  {
+  public String getJarLocation() {
     return this.jarLocation;
   }
 
-  public void setProcessingLocation(String location)
-  {
+  public void setProcessingLocation(String location) {
     this.processingLocation = location;
   }
 
-  public String getProcessingLocation()
-  {
+  public String getProcessingLocation() {
     return this.processingLocation;
   }
 
-  public void setProjectDirectory(String location)
-  {
+  public void setProjectDirectory(String location) {
     this.projectDirectory = location;
   }
 
-  public String getProjectDirectory()
-  {
+  public String getProjectDirectory() {
     return this.projectDirectory;
   }
 
-  public void setPlatform(OS_TYPE platform)
-  {
+  public void setPlatform(OS_TYPE platform) {
     this.platform = platform;
   }
 
-  public OS_TYPE getPlatform()
-  {
+  public OS_TYPE getPlatform() {
     return this.platform;
   }
 }

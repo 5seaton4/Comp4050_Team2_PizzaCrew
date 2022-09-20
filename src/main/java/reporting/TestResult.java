@@ -1,7 +1,7 @@
 package reporting;
 
 public class TestResult {
-  //TODO these variables need to be accessed via getters and setters.
+  // TODO these variables need to be accessed via getters and setters.
   public String name; // name of test (if provided and relevant)
   public String desc; // description of test (if provided and relevant)
   public float value; // mark value of test

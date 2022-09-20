@@ -21,8 +21,7 @@ public class RuntimeChecker {
   // The relative location of the executable being tested.
   private String pathToExecutable;
 
-  public RuntimeChecker() {
-  }
+  public RuntimeChecker() {}
 
   /**
    * This method will check for the existence of the executable.
@@ -49,18 +48,19 @@ public class RuntimeChecker {
    * @return boolean Returns true or false based on whether the application crashed in under 3
    *     seconds.
    */
-  public boolean runExecutable(Config config)
-  {
-    if(config.isMac())
-    {
-      //We need to get the name of the .app file to then know the name of the executable.
-      //We then traverse that .app/Contents/MacOS/<AppName>
-      pathToExecutable = config.getTempLocation() + "/" + config.getProjectName() + ".app/" +
-              "Contents/MacOS/" + config.getProjectName();
+  public boolean runExecutable(Config config) {
+    if (config.isMac()) {
+      // We need to get the name of the .app file to then know the name of the executable.
+      // We then traverse that .app/Contents/MacOS/<AppName>
+      pathToExecutable =
+          config.getTempLocation()
+              + "/"
+              + config.getProjectName()
+              + ".app/"
+              + "Contents/MacOS/"
+              + config.getProjectName();
 
-    }
-    else if (config.isWindows())
-    {
+    } else if (config.isWindows()) {
       pathToExecutable = config.getTempLocation() + "/" + config.getProjectName() + ".exe";
     }
 
