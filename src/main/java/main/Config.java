@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Config {
-
   private String processingLocation;
   private String projectDirectory;
 
