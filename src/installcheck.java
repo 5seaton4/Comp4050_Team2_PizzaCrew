@@ -1,4 +1,3 @@
-
 public class installcheck {
 
   // check if is installed on computer

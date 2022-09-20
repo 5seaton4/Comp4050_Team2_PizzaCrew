@@ -24,7 +24,7 @@ public class Main {
   }
 
   public Main() {
-    // TODO currently hardcoding the location of the exe.
+    // TODO currently hardcoding the location of the exe
     StaticAnalysisCheck();
     // runtimeCheck("/Volumes/projects/Comp4050_Team2_PizzaCrew/test_artifacts/sample_test/macos-x86_64/Flocking.app/Contents/MacOS/Flocking");
   }
