@@ -4,6 +4,7 @@ package main;
 
 import com.opencsv.CSVWriter;
 import org.junit.Test;
+import checks.junit.TestResultObject;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class reportMakerTest {
   static List JUnitAssistanceVariable;
   static String StudentID;
-  static ArrayList<testResultObject> results = new ArrayList<testResultObject>();
+  static ArrayList<TestResultObject> results = new ArrayList<TestResultObject>();
   private static final String CSV_FILE_PATH =
       "./result.csv"; // todo discuss appropriate filepath for result.csv
 
@@ -26,7 +27,7 @@ public class reportMakerTest {
   }
 
   public static void addDataToReport(
-      testResultObject
+      TestResultObject
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
     results.add(tRO);
   }
@@ -81,7 +82,7 @@ public class reportMakerTest {
 
   @Test
   public void returnReport() {
-    testResultObject test1 = new testResultObject();
+    TestResultObject test1 = new TestResultObject();
     StudentID = "45956022";
     test1.name = "Object 1 output test";
     test1.desc = "Description of test";

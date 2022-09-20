@@ -1,7 +1,8 @@
-package main;
+package reporting;
 
 // Assistance from https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/
 
+import checks.junit.TestResultObject;
 import com.opencsv.CSVWriter;
 
 import java.io.File;
@@ -11,19 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 // todo current worst case is that StudentID or results are NULL -> prints "NULL"
-public class reportMaker {
+public class ReportMaker {
   static String StudentID;
-  static ArrayList<testResultObject> results = new ArrayList<testResultObject>();
+  static ArrayList<TestResultObject> results = new ArrayList<TestResultObject>();
 
   private static final String CSV_FILE_PATH =
       "./result.csv"; // todo discuss appropriate filepath for result.csv
 
-  public static void main(String[] args) {
-    addDataToCSV(CSV_FILE_PATH);
-  }
-
   public static void addDataToReport(
-      testResultObject
+      TestResultObject
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
     results.add(tRO);
   }

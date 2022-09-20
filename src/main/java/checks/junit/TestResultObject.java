@@ -1,6 +1,6 @@
-package main;
+package checks.junit;
 
-public class testResultObject {
+public class TestResultObject {
   String name; // name of JUNIT test (if provided and relevant)
   String desc; // description of JUNIT test (if provided and relevant)
   float value; // mark value of JUNIT test
