@@ -26,6 +26,7 @@ public class Main {
   private void setup(String args[], Config config) {
     Utils.parseCommandLineArguments(args, config);
     config.checkOS();
+    config.getWorkingDirectory();
     Utils.exportProcessingCodeToJava(config);
   }
 
@@ -63,13 +64,17 @@ public class Main {
     ArrayList<String> arguments =
         new ArrayList<String>(
             Arrays.asList(
-                "pmd",
                 "-d",
                 config.getTempLocation(),
                 "-R",
                 "rulesets/java/quickstart.xml",
                 "-f",
                 "text"));
+
+    if (config.isMac())
+    {
+      arguments.add(0, "pmd");
+    }
 
     // TODO this needs to capture the output to determine if its passed or failed, and then add it
     // to the results.

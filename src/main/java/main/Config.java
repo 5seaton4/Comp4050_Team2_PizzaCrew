@@ -14,7 +14,7 @@ public class Config {
   private String projectName;
 
   private static final String TEMP_DIRECTORY_NAME = "exported-processing-code";
-  private static final String STATIC_ANALYSIS_RELATIVE_LOCATION = "tools/pmd-bin-6.49.0/bin/run.sh";
+  private static final String STATIC_ANALYSIS_RELATIVE_LOCATION = "tools/pmd-bin-6.49.0/bin/";
   public static final String RESULT_CSV_LOCATION = "./results.csv";
 
   enum OS_TYPE {
@@ -26,13 +26,25 @@ public class Config {
 
   private OS_TYPE platform;
 
-  public Config() {
-    // Get directory of executable, which we can then use to extrapolate where the dependencies are.
+  public Config() {}
+
+  public void getWorkingDirectory() 
+  {
+   // Get directory of executable, which we can then use to extrapolate where the dependencies are.
     String path = Config.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     try {
       String decodedPath = URLDecoder.decode(path, "UTF-8");
       int endIndex = decodedPath.lastIndexOf("/");
-      setJarLocation(decodedPath.substring(0, endIndex));
+
+      String workingDir = decodedPath.substring(0, endIndex);
+
+      //Windows doesn't behave with the path calculated above.
+      if (isWindows()) {
+        workingDir = workingDir.substring(1);    
+      }
+      
+      setJarLocation(workingDir);
+  
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
@@ -92,7 +104,20 @@ public class Config {
   public void setJarLocation(String jarLocation) {
     this.jarLocation = jarLocation;
     this.tempLocation = this.jarLocation + "/" + TEMP_DIRECTORY_NAME;
-    this.staticAnalysisLocation = this.jarLocation + "/" + STATIC_ANALYSIS_RELATIVE_LOCATION;
+
+    String staticAnalysisLocationBuilder = this.jarLocation + "/" + STATIC_ANALYSIS_RELATIVE_LOCATION;
+    
+    //TODO this should be moved into constants.
+    if(isMac())
+    {
+      staticAnalysisLocationBuilder += "run.sh";
+    }
+    else if(isWindows())
+    {
+      staticAnalysisLocationBuilder += "pmd.bat";
+    }
+
+    this.staticAnalysisLocation = staticAnalysisLocationBuilder;
   }
 
   public String getJarLocation() {
