@@ -1,5 +1,7 @@
 package checks.runtime;
 
+import main.Config;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -13,23 +15,13 @@ import java.io.IOException;
  */
 public class RuntimeChecker {
 
-  // In milliseconds - 3000 ms = 3s
-  private static int PROGRAM_RUN_TIME = 3000;
+  // In milliseconds - 4000 ms = 3s
+  private static int PROGRAM_RUN_TIME = 4000;
 
   // The relative location of the executable being tested.
   private String pathToExecutable;
 
-  /**
-   * The constructor of the class, which when passed in the path to the executable, will save the
-   * location for use by it methods.
-   *
-   * @param pathToExecutable The path to the executable relative to the root directory of the
-   *     project.
-   * @return Nothing.
-   */
-  public RuntimeChecker(String pathToExecutable) {
-    this.pathToExecutable = pathToExecutable.trim();
-  }
+  public RuntimeChecker() {}
 
   /**
    * This method will check for the existence of the executable.
@@ -56,7 +48,26 @@ public class RuntimeChecker {
    * @return boolean Returns true or false based on whether the application crashed in under 3
    *     seconds.
    */
-  public boolean runExecutable() {
+  public boolean runExecutable(Config config) {
+    if (config.isMac()) {
+      // We need to get the name of the .app file to then know the name of the executable.
+      // We then traverse that .app/Contents/MacOS/<AppName>
+      pathToExecutable =
+          config.getTempLocation()
+              + "/"
+              + config.getProjectName()
+              + ".app/"
+              + "Contents/MacOS/"
+              + config.getProjectName();
+
+    } else if (config.isWindows()) {
+      pathToExecutable = config.getTempLocation() + "/" + config.getProjectName() + ".exe";
+    }
+
+    if (!doesExecutableExist()) {
+      System.err.println("Error - Executable does not exist.");
+      System.exit(1);
+    }
 
     System.out.println("Running executable at " + pathToExecutable);
 

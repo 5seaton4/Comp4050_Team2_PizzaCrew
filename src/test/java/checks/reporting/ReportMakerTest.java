@@ -1,8 +1,10 @@
-package main;
+package checks.reporting;
 
 // Assistance from https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/
 
 import com.opencsv.CSVWriter;
+import org.junit.Test;
+import reporting.TestResult;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,11 +12,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo current worst case is that StudentID or results are NULL -> prints "NULL"
-public class reportMaker {
-  static String StudentID;
-  static ArrayList<testResultObject> results = new ArrayList<testResultObject>();
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// todo current worst case is that StudentID or results are NULL -> prints "NULL"
+public class ReportMakerTest {
+  static List JUnitAssistanceVariable;
+  static String StudentID;
+  static ArrayList<TestResult> results = new ArrayList<TestResult>();
   private static final String CSV_FILE_PATH =
       "./result.csv"; // todo discuss appropriate filepath for result.csv
 
@@ -23,7 +27,7 @@ public class reportMaker {
   }
 
   public static void addDataToReport(
-      testResultObject
+      TestResult
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
     results.add(tRO);
   }
@@ -53,17 +57,44 @@ public class reportMaker {
 
       for (int i = 0; i < noOfRow; i++) {
         // collect data from testResultObject(s)
-        String row = (results.get(i).returnFormatted());
+        String row =
+            ("Test: "
+                + results.get(i).orderOfAppearance
+                + " ; "
+                + results.get(i).desc
+                + " ; Value: "
+                + results.get(i).value
+                + "% ; Mark received: "
+                + results.get(i).result);
         String[] rowdata = row.split(" ");
         data.add(rowdata);
       }
 
       writer.writeAll(data); // write all "data" to CSV
+      JUnitAssistanceVariable = data;
 
       writer.close();
+      file.deleteOnExit();
     } catch (IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  @Test
+  public void returnReport() {
+    TestResult test1 = new TestResult();
+    StudentID = "45956022";
+    test1.name = "Object 1 output test";
+    test1.desc = "Description of test";
+    test1.value = 30;
+    test1.result = true;
+    test1.orderOfAppearance = 1;
+    addDataToReport(test1);
+    addDataToCSV("./testresult.csv");
+    // todo convert from JUnitAssistanceVariable (list) to something comparable to our results
+    // (convert it to string or create our own list?)
+
+    assertEquals("Test", "Test");
   }
 }

@@ -1,4 +1,4 @@
-package main;
+package checks.reporting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

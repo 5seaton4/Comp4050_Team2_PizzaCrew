@@ -1,6 +1,10 @@
-target/
+target/**
+!target/tools/
+!target/tools/**
+*.class
 *.DS_Store
 hawaiian.iml
 *.xml
 .ide/
 .idea/
+.vscode/
