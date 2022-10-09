@@ -14,7 +14,6 @@ public class Config {
   private String junitLocation;
   private String projectName;
 
-
   private static final String TEMP_DIRECTORY_NAME = "exported-processing-code";
   private static final String STATIC_ANALYSIS_RELATIVE_LOCATION = "tools/pmd-bin-6.49.0/bin/";
   public static final String RESULT_CSV_LOCATION = "./results.csv";

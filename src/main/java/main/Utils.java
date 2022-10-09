@@ -23,8 +23,9 @@ public class Utils {
     projectLocation.setRequired(true);
     options.addOption(projectLocation);
 
-    Option testFile = new Option("j", "junit-location", true, "JUNIT file to run against the processing code");
-    //TODO(Jack): Change
+    Option testFile =
+        new Option("j", "junit-location", true, "JUNIT file to run against the processing code");
+    // TODO(Jack): Change
     testFile.setRequired(false);
     options.addOption(testFile);
 
@@ -66,8 +67,7 @@ public class Utils {
     // Check the locations are valid.
     File junitFile = new File(junitFileLocation);
     if (!junitFile.isFile()) {
-      System.err.println(
-              "Error junit-location passed in does not exist or is a directory.");
+      System.err.println("Error junit-location passed in does not exist or is a directory.");
       System.exit(1);
     }
 
@@ -90,8 +90,8 @@ public class Utils {
     // Create a temp directory for the java code.
     Path tempPath = Paths.get(config.getTempLocation());
 
-    //TODO Remove the temp location if it is already there.
-    //TODO Or warn the user what the issue is.
+    // TODO Remove the temp location if it is already there.
+    // TODO Or warn the user what the issue is.
 
     String[] arguments = {
       config.getProcessingLocation(),
