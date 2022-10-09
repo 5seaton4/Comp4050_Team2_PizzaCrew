@@ -1,6 +1,6 @@
 package main;
 
-import checks.junit.JUnitHelper;
+import checks.junit.JUnitRunner;
 import reporting.TestResult;
 import checks.runtime.RuntimeChecker;
 import checks.static_analysis.StaticAnalysisChecker;
@@ -8,11 +8,6 @@ import reporting.ReportMaker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-// TODO Update README
-// TODO working on Windows.
-
-// TODO processing-java must be installed
 
 // TODO test coverage.
 // TODO comments.
@@ -36,7 +31,7 @@ public class Main {
 
     runtimeCheck(config);
     staticAnalysisCheck(config);
-    runJUNITTests();
+    runJUNITTests(config);
 
     System.out.println("Generating a CSV containing the results.");
     ReportMaker.addDataToCSV(config.RESULT_CSV_LOCATION);
@@ -45,14 +40,9 @@ public class Main {
     config.removeTemporaryFolder();
   }
 
-  // TODO we need to pass in JUNIT tests and have them run on the exported processing code.
-  private void runJUNITTests() {
-    TestResult teo1 = new TestResult();
-    TestResult teo2 = new TestResult();
-
-    JUnitHelper.runTests(teo1, teo2);
-    ReportMaker.addDataToReport(teo1);
-    ReportMaker.addDataToReport(teo2);
+  private void runJUNITTests(Config config) {
+    JUnitRunner runner = new JUnitRunner();
+    runner.runJUNITTests(config);
   }
 
   private void staticAnalysisCheck(Config config) {

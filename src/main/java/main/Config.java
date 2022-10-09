@@ -11,7 +11,9 @@ public class Config {
   private String jarLocation;
   private String tempLocation;
   private String staticAnalysisLocation;
+  private String junitLocation;
   private String projectName;
+
 
   private static final String TEMP_DIRECTORY_NAME = "exported-processing-code";
   private static final String STATIC_ANALYSIS_RELATIVE_LOCATION = "tools/pmd-bin-6.49.0/bin/";
@@ -74,6 +76,14 @@ public class Config {
     }
 
     directoryToBeDeleted.delete();
+  }
+
+  public String getJunitLocation() {
+    return this.junitLocation;
+  }
+
+  public void setJunitLocation(String junitLocation) {
+    this.junitLocation = junitLocation;
   }
 
   public String getStaticAnalysisLocation() {
