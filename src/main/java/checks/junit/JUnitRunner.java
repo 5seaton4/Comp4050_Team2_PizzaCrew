@@ -42,9 +42,9 @@ public class JUnitRunner {
   private Result compileAndRunJUnitTests(Config config, String testFile) {
     // Compile all the files in the directory.
     File[] files;
-    File dir = new File(config.getTempLocation() + "/source/");
+    File classDir = new File(config.getTempLocation() + "/source/");
     files =
-        dir.listFiles(
+        classDir.listFiles(
             new FilenameFilter() {
               @Override
               public boolean accept(File dir, String name) {
@@ -61,8 +61,7 @@ public class JUnitRunner {
     int compilerResult = compiler.run(null, null, null, fileNames);
     System.out.println("Compiler result code: " + compilerResult);
 
-    File classDir = new File(config.getTempLocation() + "/source/");
-    String testFileName = new File(testFile).getName().replaceFirst("[.][^.]+$", "");
+    String testFileWithoutExtension = new File(testFile).getName().replaceFirst("[.][^.]+$", "");
 
     Result result = null;
     try {
@@ -70,7 +69,7 @@ public class JUnitRunner {
       URL[] urls = {url};
       ClassLoader classLoader = new URLClassLoader(urls);
 
-      Class<?> junitTest = Class.forName(testFileName, true, classLoader);
+      Class<?> junitTest = Class.forName(testFileWithoutExtension, true, classLoader);
       result = JUnitCore.runClasses(junitTest);
     } catch (MalformedURLException e) {
       e.printStackTrace();
