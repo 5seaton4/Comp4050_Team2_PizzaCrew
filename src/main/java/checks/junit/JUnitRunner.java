@@ -40,19 +40,20 @@ public class JUnitRunner {
   }
 
   private Result compileAndRunJUnitTests(Config config, String testFile) {
-    //Compile all the files in the directory.
+    // Compile all the files in the directory.
     File[] files;
     File dir = new File(config.getTempLocation() + "/source/");
-    files = dir.listFiles(new FilenameFilter() {
-      @Override
-      public boolean accept(File dir, String name) {
-        return name.toLowerCase().endsWith(".java");
-      }
-    });
+    files =
+        dir.listFiles(
+            new FilenameFilter() {
+              @Override
+              public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".java");
+              }
+            });
 
     String[] fileNames = new String[files.length];
-    for (int i = 0; i < files.length; i++)
-    {
+    for (int i = 0; i < files.length; i++) {
       fileNames[i] = files[i].getAbsolutePath();
     }
 
