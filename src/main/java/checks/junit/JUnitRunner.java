@@ -10,6 +10,7 @@ import reporting.TestResult;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,9 +18,6 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-// TODO(Jack): Does each processing project have a file with the project as its name?
-// TODO(Jack): Make sure this runs on Windows.
-// TODO(Jack): Check failures output.
 public class JUnitRunner {
 
   public JUnitRunner() {}
@@ -41,9 +39,25 @@ public class JUnitRunner {
     return dest.toPath().toString();
   }
 
-  private Result compileAndRunJUnitTests(Config config, String testFile, String classToTest) {
+  private Result compileAndRunJUnitTests(Config config, String testFile) {
+    //Compile all the files in the directory.
+    File[] files;
+    File dir = new File(config.getTempLocation() + "/source/");
+    files = dir.listFiles(new FilenameFilter() {
+      @Override
+      public boolean accept(File dir, String name) {
+        return name.toLowerCase().endsWith(".java");
+      }
+    });
+
+    String[] fileNames = new String[files.length];
+    for (int i = 0; i < files.length; i++)
+    {
+      fileNames[i] = files[i].getAbsolutePath();
+    }
+
     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-    int compilerResult = compiler.run(null, null, null, testFile, classToTest);
+    int compilerResult = compiler.run(null, null, null, fileNames);
     System.out.println("Compiler result code: " + compilerResult);
 
     File classDir = new File(config.getTempLocation() + "/source/");
@@ -86,9 +100,8 @@ public class JUnitRunner {
 
   public void runJUNITTests(Config config) {
     String testFileLocation = moveTestFileIntoSourceDirectory(config);
-    String classToTest = config.getTempLocation() + "/source/" + config.getProjectName() + ".java";
 
-    Result result = compileAndRunJUnitTests(config, testFileLocation, classToTest);
+    Result result = compileAndRunJUnitTests(config, testFileLocation);
     if (result == null) {
       System.out.println("Failed to compile the Java classes.");
       System.exit(1);

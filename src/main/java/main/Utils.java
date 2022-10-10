@@ -25,8 +25,7 @@ public class Utils {
 
     Option testFile =
         new Option("j", "junit-location", true, "JUNIT file to run against the processing code");
-    // TODO(Jack): Change
-    testFile.setRequired(false);
+    testFile.setRequired(true);
     options.addOption(testFile);
 
     Option studentIdOption = new Option("s", "student-id", true, "Student ID");
