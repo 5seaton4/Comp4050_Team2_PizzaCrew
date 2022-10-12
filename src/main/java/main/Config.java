@@ -14,8 +14,6 @@ public class Config {
   private String junitLocation;
   private String projectName;
 
-
-
   private boolean runIndividual;
   private boolean runRuntimeCheck;
   private boolean runStaticAnalysis;

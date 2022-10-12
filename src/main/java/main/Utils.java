@@ -29,11 +29,13 @@ public class Utils {
     testFile.setRequired(false);
     options.addOption(testFile);
 
-    Option runStaticOption = new Option("a", "run-static-analysis", false, "Run the static analysis test");
+    Option runStaticOption =
+        new Option("a", "run-static-analysis", false, "Run the static analysis test");
     runStaticOption.setRequired(false);
     options.addOption(runStaticOption);
 
-    Option runRuntimeOption = new Option("r", "run-runtime-check", false, "Run the runtime check test");
+    Option runRuntimeOption =
+        new Option("r", "run-runtime-check", false, "Run the runtime check test");
     runRuntimeOption.setRequired(false);
     options.addOption(runRuntimeOption);
 
@@ -59,8 +61,7 @@ public class Utils {
     String runRuntimeCheck = cmd.getOptionValue("run-runtime-check");
     String runStaticAnalysis = cmd.getOptionValue("run-static-analysis");
 
-    if((runStaticAnalysis != null) || (runRuntimeCheck != null))
-    {
+    if ((runStaticAnalysis != null) || (runRuntimeCheck != null)) {
       config.setRunIndividual(true);
     }
 
@@ -68,7 +69,7 @@ public class Utils {
       config.setRunRuntimeCheck(true);
     }
 
-    if(runStaticAnalysis != null) {
+    if (runStaticAnalysis != null) {
       config.setRunStaticAnalysis(true);
     }
 
@@ -85,11 +86,9 @@ public class Utils {
       System.exit(1);
     }
 
-
-
     String junitFileLocation = cmd.getOptionValue("junit-location");
     // Check the locations are valid.
-    if(junitFileLocation != null) {
+    if (junitFileLocation != null) {
       File junitFile = new File(junitFileLocation);
       if (!junitFile.isFile()) {
         System.err.println("Error junit-location passed in does not exist or is a directory.");

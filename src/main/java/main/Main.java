@@ -29,22 +29,18 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-    if(config.isRunIndividual())
-    {
-      if(config.isRunRuntimeCheck()) {
+    if (config.isRunIndividual()) {
+      if (config.isRunRuntimeCheck()) {
         runtimeCheck(config);
       }
-      if(config.isRunStaticAnalysis()) {
+      if (config.isRunStaticAnalysis()) {
         staticAnalysisCheck(config);
       }
-    }
-    else
-    {
+    } else {
       runtimeCheck(config);
       staticAnalysisCheck(config);
     }
-    if(config.getJunitLocation() != null)
-    {
+    if (config.getJunitLocation() != null) {
       runJUNITTests(config);
     }
 
