@@ -14,6 +14,12 @@ public class Config {
   private String junitLocation;
   private String projectName;
 
+
+
+  private boolean runIndividual;
+  private boolean runRuntimeCheck;
+  private boolean runStaticAnalysis;
+
   private static final String TEMP_DIRECTORY_NAME = "exported-processing-code";
   private static final String STATIC_ANALYSIS_RELATIVE_LOCATION = "tools/pmd-bin-6.49.0/bin/";
   public static final String RESULT_CSV_LOCATION = "./results.csv";
@@ -152,5 +158,29 @@ public class Config {
 
   public OS_TYPE getPlatform() {
     return this.platform;
+  }
+
+  public boolean isRunStaticAnalysis() {
+    return runStaticAnalysis;
+  }
+
+  public void setRunStaticAnalysis(boolean runStaticAnalysis) {
+    this.runStaticAnalysis = runStaticAnalysis;
+  }
+
+  public boolean isRunRuntimeCheck() {
+    return runRuntimeCheck;
+  }
+
+  public void setRunRuntimeCheck(boolean runRuntimeCheck) {
+    this.runRuntimeCheck = runRuntimeCheck;
+  }
+
+  public boolean isRunIndividual() {
+    return runIndividual;
+  }
+
+  public void setRunIndividual(boolean runIndividual) {
+    this.runIndividual = runIndividual;
   }
 }

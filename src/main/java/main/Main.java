@@ -29,9 +29,24 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-    runtimeCheck(config);
-    staticAnalysisCheck(config);
-    runJUNITTests(config);
+    if(config.isRunIndividual())
+    {
+      if(config.isRunRuntimeCheck()) {
+        runtimeCheck(config);
+      }
+      if(config.isRunStaticAnalysis()) {
+        staticAnalysisCheck(config);
+      }
+    }
+    else
+    {
+      runtimeCheck(config);
+      staticAnalysisCheck(config);
+    }
+    if(config.getJunitLocation() != null)
+    {
+      runJUNITTests(config);
+    }
 
     System.out.println("Generating a CSV containing the results.");
     ReportMaker.addDataToCSV(config.RESULT_CSV_LOCATION);
