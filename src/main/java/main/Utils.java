@@ -23,6 +23,11 @@ public class Utils {
     projectLocation.setRequired(true);
     options.addOption(projectLocation);
 
+    Option testFile =
+        new Option("j", "junit-location", true, "JUNIT file to run against the processing code");
+    testFile.setRequired(true);
+    options.addOption(testFile);
+
     Option studentIdOption = new Option("s", "student-id", true, "Student ID");
     studentIdOption.setRequired(false);
     options.addOption(studentIdOption);
@@ -51,14 +56,23 @@ public class Utils {
           "Error processing-java-location passed in does not exist or is a directory.");
       System.exit(1);
     }
-
     if (!projectFile.isDirectory()) {
       System.err.println("Error project location passed in does not exist or is not a directory.");
       System.exit(1);
     }
 
+    String junitFileLocation = cmd.getOptionValue("junit-location");
+
+    // Check the locations are valid.
+    File junitFile = new File(junitFileLocation);
+    if (!junitFile.isFile()) {
+      System.err.println("Error junit-location passed in does not exist or is a directory.");
+      System.exit(1);
+    }
+
     config.setProcessingLocation(processingFileLocation);
     config.setProjectDirectory(projectDir);
+    config.setJunitLocation(junitFileLocation);
     if (studentId != null) {
       ReportMaker.STUDENT_ID = studentId;
     }
@@ -74,6 +88,9 @@ public class Utils {
 
     // Create a temp directory for the java code.
     Path tempPath = Paths.get(config.getTempLocation());
+
+    // TODO Remove the temp location if it is already there.
+    // TODO Or warn the user what the issue is.
 
     String[] arguments = {
       config.getProcessingLocation(),
