@@ -9,9 +9,8 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import java.io.File; //newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-import java.util.List; //newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-import java.util.function.ToLongBiFunction;
+import java.io.File; // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+// newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 // TODO Update README
 // TODO working on Windows.
@@ -39,15 +38,15 @@ public class Main {
 
     for (int t = 0; t < numberofThreads; t++) {
       final int thread = t;
-      threads[t] = new Thread() {
-        @Override
-        public void run() {
-          runThread(filesList, numberofThreads, thread, filesPerThread, reaminingFiles);
-        }
-      };
+      threads[t] =
+          new Thread() {
+            @Override
+            public void run() {
+              runThread(filesList, numberofThreads, thread, filesPerThread, reaminingFiles);
+            }
+          };
     }
-    for (Thread t1 : threads)
-      t1.start();
+    for (Thread t1 : threads) t1.start();
     for (Thread t2 : threads)
       try {
         t2.join();
@@ -94,14 +93,15 @@ public class Main {
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
     // TODO these arguments need configuring.
-    ArrayList<String> arguments = new ArrayList<String>(
-        Arrays.asList(
-            "-d",
-            config.getTempLocation(),
-            "-R",
-            "rulesets/java/quickstart.xml",
-            "-f",
-            "text"));
+    ArrayList<String> arguments =
+        new ArrayList<String>(
+            Arrays.asList(
+                "-d",
+                config.getTempLocation(),
+                "-R",
+                "rulesets/java/quickstart.xml",
+                "-f",
+                "text"));
 
     if (config.isMac()) {
       arguments.add(0, "pmd");
