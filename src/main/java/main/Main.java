@@ -9,6 +9,10 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.io.File; //newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+import java.util.List; //newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+import java.util.function.ToLongBiFunction;
+
 // TODO Update README
 // TODO working on Windows.
 
@@ -19,8 +23,36 @@ import java.util.Arrays;
 
 public class Main {
 
+  private static int filesPerThread;
+
   public static void main(String[] args) {
     new Main(args);
+    // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    File filePath = new File("C:\\Users\\Priyanshi Patel\\Documents\\MixtureGrid");
+    File filesList[] = filePath.listFiles();
+
+    int numberofThreads = 2;
+    Thread[] threads = new Thread[numberofThreads];
+
+    final int filesPerThread = filesList.length / numberofThreads;
+    final int reaminingFiles = filesList.length % numberofThreads;
+
+    for (int t = 0; t < numberofThreads; t++) {
+      final int thread = t;
+      threads[t] = new Thread() {
+        @Override
+        public void run() {
+          runThread(filesList, numberofThreads, thread, filesPerThread, reaminingFiles);
+        }
+      };
+    }
+    for (Thread t1 : threads)
+      t1.start();
+    for (Thread t2 : threads)
+      try {
+        t2.join();
+      } catch (InterruptedException e) {
+      } // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   }
 
   private void setup(String args[], Config config) {
@@ -45,7 +77,8 @@ public class Main {
     config.removeTemporaryFolder();
   }
 
-  // TODO we need to pass in JUNIT tests and have them run on the exported processing code.
+  // TODO we need to pass in JUNIT tests and have them run on the exported
+  // processing code.
   private void runJUNITTests() {
     TestResult teo1 = new TestResult();
     TestResult teo2 = new TestResult();
@@ -61,21 +94,21 @@ public class Main {
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
     // TODO these arguments need configuring.
-    ArrayList<String> arguments =
-        new ArrayList<String>(
-            Arrays.asList(
-                "-d",
-                config.getTempLocation(),
-                "-R",
-                "rulesets/java/quickstart.xml",
-                "-f",
-                "text"));
+    ArrayList<String> arguments = new ArrayList<String>(
+        Arrays.asList(
+            "-d",
+            config.getTempLocation(),
+            "-R",
+            "rulesets/java/quickstart.xml",
+            "-f",
+            "text"));
 
     if (config.isMac()) {
       arguments.add(0, "pmd");
     }
 
-    // TODO this needs to capture the output to determine if its passed or failed, and then add it
+    // TODO this needs to capture the output to determine if its passed or failed,
+    // and then add it
     // to the results.
     staticAnalysis.runExecutableWithArguments(config, arguments);
   }
