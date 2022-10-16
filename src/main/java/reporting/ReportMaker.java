@@ -14,6 +14,8 @@ import java.util.List;
 public class ReportMaker {
   public static String STUDENT_ID;
   public static ArrayList<TestResult> results = new ArrayList<TestResult>();
+  public static ArrayList<String> SAResults = new ArrayList<String>();
+  public static boolean runtimeresult;
 
   private static final String CSV_FILE_PATH =
       "./result.csv"; // todo discuss appropriate filepath for result.csv
@@ -23,6 +25,10 @@ public class ReportMaker {
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
     results.add(tRO);
   }
+  public static void addSA(String saline) {
+    SAResults.add(saline);
+  }
+
 
   public static void addDataToCSV(
       String
@@ -40,19 +46,54 @@ public class ReportMaker {
               CSVWriter.DEFAULT_ESCAPE_CHARACTER,
               CSVWriter.DEFAULT_LINE_END); //  remove "garbage" from .csv file
 
+      // Setup csv and add student ID
       List<String[]> data =
-          new ArrayList<String[]>(); // list which maintains our data to be written
+              new ArrayList<String[]>(); // list which maintains our data to be written
       int noOfRow = results.size();
-      String SID = ("Student ID: " + STUDENT_ID);
+      String SID = ("Student ID: , " + STUDENT_ID);
       String[] SIDINFO = SID.split(" ");
       data.add(SIDINFO);
 
+      // runtime results printed on one line, no need for anything beyond title
+      String RTTResult;
+      if (runtimeresult) {RTTResult = "Pass";} else {RTTResult = "Fail";}
+      String title = "Runtime test result: ," + RTTResult;
+      String[] titleadd = title.split(" ");
+      data.add(titleadd);
+
+
+
+      title = "Static Analysis Result: ";
+      titleadd = title.split(" ");
+      data.add(titleadd);
+
+      // Static analysis printing
+      //todo what happens if the static analysis has a comma in it? This will ruin .csv formatting :(
+      for (int i = 0; i < SAResults.size()-1; i++) {
+        if (i > 11) { // skips import statements as these are made by processing-java and not relevant to student
+          String row = (SAResults.get(i));
+          String[] rowdata = row.split(" ");
+          data.add(rowdata);
+        }
+      }
+
+
+      title = "Unit Tests Results: ";
+      titleadd = title.split(" ");
+      data.add(titleadd);
+    int addscore = 0;
+      // Junit printing
       for (int i = 0; i < noOfRow; i++) {
         // collect data from testResultObject(s)
         String row = (results.get(i).returnFormatted());
         String[] rowdata = row.split(" ");
         data.add(rowdata);
+        if (results.get(i).result)  {addscore += results.get(i).value;}
       }
+      String score = "Unit test mark: , ";
+      score += String.valueOf(addscore);
+      titleadd = score.split(" "); // using titleadd over new var as to save space
+      data.add(titleadd);
 
       writer.writeAll(data); // write all "data" to CSV
 

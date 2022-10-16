@@ -1,0 +1,23 @@
+Student ID: , null
+Runtime test result: ,Pass
+Static Analysis Result:
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:32:	UnnecessarySemicolon:	Unnecessary semicolon
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:76:	LooseCoupling:	Avoid using implementation types like 'ArrayList'; use the interface instead
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:89:	LooseCoupling:	Avoid using implementation types like 'ArrayList'; use the interface instead
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:152:	ControlStatementBraces:	This statement should have braces
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:153:	ControlStatementBraces:	This statement should have braces
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:154:	ControlStatementBraces:	This statement should have braces
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:155:	ControlStatementBraces:	This statement should have braces
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:160:	LooseCoupling:	Avoid using implementation types like 'ArrayList'; use the interface instead
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:168:	UselessParentheses:	Useless parentheses.
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:168:	UselessParentheses:	Useless parentheses.
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:199:	LooseCoupling:	Avoid using implementation types like 'ArrayList'; use the interface instead
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:205:	UselessParentheses:	Useless parentheses.
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:205:	UselessParentheses:	Useless parentheses.
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:230:	LooseCoupling:	Avoid using implementation types like 'ArrayList'; use the interface instead
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:236:	UselessParentheses:	Useless parentheses.
+C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:236:	UselessParentheses:	Useless parentheses.
+Unit Tests Results:
+Test: 0 , The program is run to ascertain whether there is any runtime errors. , Value: 0.0% , Mark received: Pass
+Test: 0 , Result of JUnit tests passed into the program. , Value: 1.0% , Mark received: Fail
+Unit test mark: , 0

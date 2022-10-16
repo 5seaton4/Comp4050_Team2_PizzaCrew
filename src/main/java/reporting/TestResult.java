@@ -19,11 +19,11 @@ public class TestResult {
     }
     return ("Test: "
         + orderOfAppearance
-        + " ; "
+        + " , "
         + desc
-        + " ; Value: "
+        + " , Value: "
         + value
-        + "% ; Mark received: "
+        + "% , Mark received: "
         + passOrFail);
   }
 }

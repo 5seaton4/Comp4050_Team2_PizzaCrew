@@ -1,6 +1,7 @@
 package checks.static_analysis;
 
 import main.Config;
+import reporting.ReportMaker;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,6 +50,7 @@ public class StaticAnalysisChecker {
       System.out.println("Static Analysis Output\n");
       String s = null;
       while ((s = stdInput.readLine()) != null) {
+        ReportMaker.addSA(s);
         System.out.println(s);
       }
 
