@@ -53,9 +53,10 @@ public class Main {
     // Clean up the temporary folder.
     config.removeTemporaryFolder();
 
+    // TODO need to trigger multithreading when folder is passed in instead of individual files.
     
     //Multithreading for running multiple tests at once
-    File filePath = new File("C:\\Users\\Priyanshi Patel\\Documents\\MixtureGrid");
+    File filePath = new File("C:\\Users\\Aashir\\Documents\\Tests"); //placeholder path
     File filesList[] = filePath.listFiles();
 
     int numberofThreads = 2;
