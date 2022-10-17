@@ -8,6 +8,9 @@ import reporting.ReportMaker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File; 
+import java.util.List; 
+import java.util.function.ToLongBiFunction;
 
 // TODO test coverage.
 // TODO comments.
@@ -49,7 +52,55 @@ public class Main {
 
     // Clean up the temporary folder.
     config.removeTemporaryFolder();
+
+    
+    //Multithreading for running multiple tests at once
+    File filePath = new File("C:\\Users\\Priyanshi Patel\\Documents\\MixtureGrid");
+    File filesList[] = filePath.listFiles();
+
+    int numberofThreads = 2;
+    Thread[] threads = new Thread[numberofThreads];
+
+    final int filesPerThread = filesList.length / numberofThreads;
+    final int remainingFiles = filesList.length % numberofThreads;
+
+    for (int t = 0; t < numberofThreads; t++) {
+      final int thread = t;
+      threads[t] = new Thread() {
+        @Override
+        public void run() {
+          runThread(filesList, numberofThreads, thread, filesPerThread, remainingFiles);
+        }
+      };
+    }
+    for (Thread t1 : threads)
+      t1.start();
+    for (Thread t2 : threads)
+      try {
+        t2.join();
+      } catch (InterruptedException e) {
+      }
+
   }
+
+  private static void runThread(File[] filesList, int numberofThreads, int thread, int filesPerThread, int remainingFiles) {
+    //assigning files equallyto each thread and assigning remaining files to last thread
+    List<File> inFiles = new ArrayList<File>();
+    for(int i = thread * filesPerThread; i < (thread + 1) * filesPerThread; i++) {
+      inFiles.add(filesList[i]);
+    }
+    if(thread == numberofThreads - 1 && remainingFiles > 0) {
+      for(int j = filesList.length - remainingFiles; j < filesList.length; j++) {
+        inFiles.add(filesList[j]);
+      
+        //process files
+        for(File file : inFiles) {
+          System.out.println("Processing file: " + file.getName() + " on thread: " + Thread.currentThread().getName());
+          }
+        }
+      }
+    }
+
 
   private void runJUNITTests(Config config) {
     JUnitRunner runner = new JUnitRunner();
