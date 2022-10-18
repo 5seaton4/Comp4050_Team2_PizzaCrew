@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.io.File; // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-// newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+import java.util.List;// newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+import java.nio.file.Files;
 
 // TODO Update README
 // TODO working on Windows.
@@ -21,9 +22,6 @@ import java.io.File; // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 // TODO comments.
 
 public class Main {
-
-  private static int filesPerThread;
-
   public static void main(String[] args) {
     new Main(args);
     // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
@@ -34,24 +32,38 @@ public class Main {
     Thread[] threads = new Thread[numberofThreads];
 
     final int filesPerThread = filesList.length / numberofThreads;
-    final int reaminingFiles = filesList.length % numberofThreads;
+    final int remainingFiles = filesList.length % numberofThreads;
 
     for (int t = 0; t < numberofThreads; t++) {
       final int thread = t;
-      threads[t] =
-          new Thread() {
-            @Override
-            public void run() {
-              runThread(filesList, numberofThreads, thread, filesPerThread, reaminingFiles);
-            }
-          };
+      threads[t] = new Thread() {
+        @Override
+        public void run() {
+          runThread(filesList, numberofThreads, thread, filesPerThread, remainingFiles);
+        }
+      };
     }
-    for (Thread t1 : threads) t1.start();
+    for (Thread t1 : threads)
+      t1.start();
     for (Thread t2 : threads)
       try {
         t2.join();
       } catch (InterruptedException e) {
       } // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  }
+
+  private static void runThread(File[] filesList, int numberofThreads, int thread, int filesPerThread,
+      int remainingFiles) {
+    List<File> inFiles = new ArrayList<>();
+    for (int i = thread * filesPerThread; i < (thread + 1) * filesPerThread; i++)
+      inFiles.add(filesList[i]);
+    if (thread == numberofThreads - 1 && remainingFiles > 0)
+      for (int j = filesList.length - remainingFiles; j < filesList.length; j++)
+        inFiles.add(filesList[j]);
+
+    for (File file : inFiles) {
+      System.out.println("processing " + file.getName() + " in thread " + Thread.currentThread().getName());
+    }
   }
 
   private void setup(String args[], Config config) {
@@ -93,15 +105,14 @@ public class Main {
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
     // TODO these arguments need configuring.
-    ArrayList<String> arguments =
-        new ArrayList<String>(
-            Arrays.asList(
-                "-d",
-                config.getTempLocation(),
-                "-R",
-                "rulesets/java/quickstart.xml",
-                "-f",
-                "text"));
+    ArrayList<String> arguments = new ArrayList<String>(
+        Arrays.asList(
+            "-d",
+            config.getTempLocation(),
+            "-R",
+            "rulesets/java/quickstart.xml",
+            "-f",
+            "text"));
 
     if (config.isMac()) {
       arguments.add(0, "pmd");
