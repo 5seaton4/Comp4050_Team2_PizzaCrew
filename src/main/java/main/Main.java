@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.io.File; // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-import java.util.List;// newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-import java.nio.file.Files;
+import java.util.List; // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 
 // TODO Update README
 // TODO working on Windows.
@@ -36,15 +35,15 @@ public class Main {
 
     for (int t = 0; t < numberofThreads; t++) {
       final int thread = t;
-      threads[t] = new Thread() {
-        @Override
-        public void run() {
-          runThread(filesList, numberofThreads, thread, filesPerThread, remainingFiles);
-        }
-      };
+      threads[t] =
+          new Thread() {
+            @Override
+            public void run() {
+              runThread(filesList, numberofThreads, thread, filesPerThread, remainingFiles);
+            }
+          };
     }
-    for (Thread t1 : threads)
-      t1.start();
+    for (Thread t1 : threads) t1.start();
     for (Thread t2 : threads)
       try {
         t2.join();
@@ -52,8 +51,8 @@ public class Main {
       } // newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   }
 
-  private static void runThread(File[] filesList, int numberofThreads, int thread, int filesPerThread,
-      int remainingFiles) {
+  private static void runThread(
+      File[] filesList, int numberofThreads, int thread, int filesPerThread, int remainingFiles) {
     List<File> inFiles = new ArrayList<>();
     for (int i = thread * filesPerThread; i < (thread + 1) * filesPerThread; i++)
       inFiles.add(filesList[i]);
@@ -62,7 +61,8 @@ public class Main {
         inFiles.add(filesList[j]);
 
     for (File file : inFiles) {
-      System.out.println("processing " + file.getName() + " in thread " + Thread.currentThread().getName());
+      System.out.println(
+          "processing " + file.getName() + " in thread " + Thread.currentThread().getName());
     }
   }
 
@@ -105,14 +105,15 @@ public class Main {
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
     // TODO these arguments need configuring.
-    ArrayList<String> arguments = new ArrayList<String>(
-        Arrays.asList(
-            "-d",
-            config.getTempLocation(),
-            "-R",
-            "rulesets/java/quickstart.xml",
-            "-f",
-            "text"));
+    ArrayList<String> arguments =
+        new ArrayList<String>(
+            Arrays.asList(
+                "-d",
+                config.getTempLocation(),
+                "-R",
+                "rulesets/java/quickstart.xml",
+                "-f",
+                "text"));
 
     if (config.isMac()) {
       arguments.add(0, "pmd");
