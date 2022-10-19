@@ -46,9 +46,18 @@ public class StaticAnalysisChecker {
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
       // Read the output from the command
-      System.out.println("Static Analysis Output\n");
+      System.out.println("Static Analysis Display\n");
       String s = null;
+      ArrayList<ArrayList<String>> list =  new ArrayList<ArrayList<String>>(); 
+      ArrayList<String> subList = new ArrayList<String>();
       while ((s = stdInput.readLine()) != null) {
+
+        String[] arr = s.split(" ");
+
+        for(int i=0;i<2;i++){
+          list.get(0).add(arr[i]);
+        }
+        
         System.out.println(s);
       }
 
