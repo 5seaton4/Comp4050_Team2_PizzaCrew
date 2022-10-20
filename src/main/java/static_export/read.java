@@ -1,4 +1,4 @@
-package static_export.static_export;
+package static_export;
 
 import java.io.BufferedReader;
 import java.io.IOException;
