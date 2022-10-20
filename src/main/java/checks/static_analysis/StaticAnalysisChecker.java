@@ -50,15 +50,28 @@ public class StaticAnalysisChecker {
       String s = null;
       ArrayList<ArrayList<String>> list =  new ArrayList<ArrayList<String>>(); 
       ArrayList<String> subList = new ArrayList<String>();
+      int a = 0;
       while ((s = stdInput.readLine()) != null) {
 
         String[] arr = s.split(" ");
 
-        for(int i=0;i<2;i++){
-          list.get(0).add(arr[i]);
+        System.out.println("Arrays to String");
+        System.out.println(Arrays.toString(arr));
+
+        System.out.println("Using a loop and size of array is: " + arr.length);
+        for(int k=0;k<arr.length;k++) {
+          System.out.println(arr[k]);
         }
-        
-        System.out.println(s);
+        // for(int i=0;i<=1;i++){
+        //   list.get(a).add(arr[i]);
+        // }
+        // a++;
+
+        // for(int j=0;j<list.size();j++) {
+        //   System.out.println(list.get(j).get(0));
+        //   System.out.println(list.get(j).get(1));
+        //   System.out.println(list.get(j).get(2));
+        // }
       }
 
       // Read any errors from the attempted command
