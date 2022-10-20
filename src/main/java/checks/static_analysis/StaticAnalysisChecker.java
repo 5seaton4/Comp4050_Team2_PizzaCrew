@@ -54,6 +54,11 @@ public class StaticAnalysisChecker {
       while ((s = stdInput.readLine()) != null) {
 
         String[] arr = s.split(" ");
+
+        for (int i = 0; i < 2; i++) {
+          list.get(0).add(arr[i]);
+        }
+
         System.out.println(s);
       }
 
