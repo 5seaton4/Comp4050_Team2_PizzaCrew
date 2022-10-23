@@ -31,8 +31,8 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-    //Multithreading for running multiple files at once
-    File filePath = new File(config.getProjectDirectory()); //placeholder path
+    // Multithreading for running multiple files at once
+    File filePath = new File(config.getProjectDirectory()); // placeholder path
     File filesList[] = filePath.listFiles();
 
     int numberofThreads = 2;
@@ -57,8 +57,8 @@ public class Main {
         t2.join();
       } catch (InterruptedException e) {
       }
-    //------------------------------------------------------------
-    
+    // ------------------------------------------------------------
+
     if (config.isRunIndividual()) {
       if (config.isRunRuntimeCheck()) {
         runtimeCheck(config);
@@ -81,12 +81,11 @@ public class Main {
     config.removeTemporaryFolder();
 
     // TODO need to trigger multithreading when folder is passed in instead of individual file.
-    
-    
 
   }
 
-  private static void runThread(File[] filesList, int numberofThreads, int thread, int filesPerThread, int remainingFiles) {
+  private static void runThread(
+      File[] filesList, int numberofThreads, int thread, int filesPerThread, int remainingFiles) {
     // assigning files equallyto each thread and assigning remaining files to last thread
     List<File> inFiles = new ArrayList<File>();
     for (int i = thread * filesPerThread; i < (thread + 1) * filesPerThread; i++) {
