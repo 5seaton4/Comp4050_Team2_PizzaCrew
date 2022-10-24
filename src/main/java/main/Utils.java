@@ -39,6 +39,10 @@ public class Utils {
     runRuntimeOption.setRequired(false);
     options.addOption(runRuntimeOption);
 
+    Option multipleProjectsOption = new Option("m", "multiple-projects", false, "Passing in Multiple Projects");
+    multipleProjectsOption.setRequired(false);
+    options.addOption(multipleProjectsOption);
+
     Option studentIdOption = new Option("s", "student-id", true, "Student ID");
     studentIdOption.setRequired(false);
     options.addOption(studentIdOption);
@@ -58,19 +62,21 @@ public class Utils {
     String processingFileLocation = cmd.getOptionValue("processing-java-location");
     String projectDir = cmd.getOptionValue("project-location");
     String studentId = cmd.getOptionValue("student-id");
-    String runRuntimeCheck = cmd.getOptionValue("run-runtime-check");
-    String runStaticAnalysis = cmd.getOptionValue("run-static-analysis");
 
-    if ((runStaticAnalysis != null) || (runRuntimeCheck != null)) {
+    if (cmd.hasOption("r") || cmd.hasOption("a")) {
       config.setRunIndividual(true);
     }
 
-    if (runRuntimeCheck != null) {
+    if (cmd.hasOption("r")) {
       config.setRunRuntimeCheck(true);
     }
 
-    if (runStaticAnalysis != null) {
+    if (cmd.hasOption("a")) {
       config.setRunStaticAnalysis(true);
+    }
+
+    if (cmd.hasOption("m")) {
+      config.setRunMultiple(true);
     }
 
     // Check the locations are valid.
@@ -118,9 +124,28 @@ public class Utils {
     // TODO Remove the temp location if it is already there.
     // TODO Or warn the user what the issue is.
 
+    File projectDir = new File(config.getProjectDirectory());
+    File[] projectDirFiles = projectDir.listFiles();
+    int dirCount = 0;
+    int dirId = 0;
+    for(int i = 0; i < projectDirFiles.length; i++)
+    {
+      File file = projectDirFiles[i];
+      if(file.isDirectory())
+      {
+        dirCount++;
+        dirId = i;
+      }
+    }
+
+    if(dirCount != 1) {
+      System.err.println("Error project directory should only contain one folder containing the PDE files.");
+      System.exit(1);
+    }
+
     String[] arguments = {
       config.getProcessingLocation(),
-      "--sketch=" + config.getProjectDirectory(),
+      "--sketch=" + projectDirFiles[dirId],
       "--output=" + tempPath.toString(),
       "--export",
       "--force",

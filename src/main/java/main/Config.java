@@ -9,18 +9,23 @@ public class Config {
   private String projectDirectory;
 
   private String jarLocation;
+
   private String tempLocation;
   private String staticAnalysisLocation;
   private String junitLocation;
   private String projectName;
 
+
+  public String resultsCSVLocation = "./results.csv";
+
   private boolean runIndividual;
   private boolean runRuntimeCheck;
   private boolean runStaticAnalysis;
 
+  private boolean runMultiple;
+
   private static final String TEMP_DIRECTORY_NAME = "exported-processing-code";
   private static final String STATIC_ANALYSIS_RELATIVE_LOCATION = "tools/pmd-bin-6.49.0/bin/";
-  public static final String RESULT_CSV_LOCATION = "./results.csv";
 
   enum OS_TYPE {
     WINDOWS,
@@ -180,5 +185,25 @@ public class Config {
 
   public void setRunIndividual(boolean runIndividual) {
     this.runIndividual = runIndividual;
+  }
+
+  public boolean isRunMultiple() {
+    return runMultiple;
+  }
+
+  public void setRunMultiple(boolean runMultiple) {
+    this.runMultiple = runMultiple;
+  }
+
+  public void setTempLocation(String tempLocation) {
+    this.tempLocation = tempLocation;
+  }
+
+  public String getResultsCSVLocation() {
+    return resultsCSVLocation;
+  }
+
+  public void setResultsCSVLocation(String resultsCSVLocation) {
+    this.resultsCSVLocation = resultsCSVLocation;
   }
 }

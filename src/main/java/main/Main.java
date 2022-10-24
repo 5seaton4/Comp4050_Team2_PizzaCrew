@@ -1,6 +1,7 @@
 package main;
 
 import checks.junit.JUnitRunner;
+import org.apache.commons.lang3.RandomStringUtils;
 import reporting.TestResult;
 import checks.runtime.RuntimeChecker;
 import checks.static_analysis.StaticAnalysisChecker;
@@ -9,10 +10,12 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.File;
-import java.util.List;
 
 // TODO test coverage.
 // TODO comments.
+// TODO Make results folder.
+
+// Prerequisite - The students will name their project folders with their student id.
 
 public class Main {
 
@@ -24,87 +27,54 @@ public class Main {
     Utils.parseCommandLineArguments(args, config);
     config.checkOS();
     config.getWorkingDirectory();
-    Utils.exportProcessingCodeToJava(config);
+  }
+
+  private void runTests(Config config) {
+
+    if(config.isRunIndividual())
+    {
+      if(config.isRunRuntimeCheck()) {
+      }
+      if(config.isRunStaticAnalysis()){
+        staticAnalysisCheck(config);
+      }
+    }
+    else {
+      runtimeCheck(config);
+      staticAnalysisCheck(config);
+    }
+
+    if(config.getJunitLocation() != null) {
+      runJUNITTests(config);
+    }
+    System.out.println("Generating a CSV containing the results.");
+    ReportMaker.addDataToCSV(config.getResultsCSVLocation());
   }
 
   public Main(String[] args) {
     Config config = new Config();
     setup(args, config);
 
-    // Multithreading for running multiple files at once
-    File filePath = new File(config.getProjectDirectory()); // placeholder path
-    File filesList[] = filePath.listFiles();
+    if(config.isRunMultiple()) {
+      File projectsDir = new File(config.getProjectDirectory());
+      for (File file : projectsDir.listFiles()) {
+        if(!file.isDirectory()) continue;
 
-    int numberofThreads = 2;
-    Thread[] threads = new Thread[numberofThreads];
+        config.setProjectDirectory(file.getAbsolutePath());
+        config.setTempLocation(config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
 
-    final int filesPerThread = filesList.length / numberofThreads;
-    final int remainingFiles = filesList.length % numberofThreads;
-
-    for (int t = 0; t < numberofThreads; t++) {
-      final int thread = t;
-      threads[t] =
-          new Thread() {
-            @Override
-            public void run() {
-              runThread(filesList, numberofThreads, thread, filesPerThread, remainingFiles);
-            }
-          };
-    }
-    for (Thread t1 : threads) t1.start();
-    for (Thread t2 : threads)
-      try {
-        t2.join();
-      } catch (InterruptedException e) {
+        Utils.exportProcessingCodeToJava(config);
+        config.setResultsCSVLocation("./" + file.toPath().getFileName() + ".csv");
+        runTests(config);
       }
-    // ------------------------------------------------------------
-
-    if (config.isRunIndividual()) {
-      if (config.isRunRuntimeCheck()) {
-        runtimeCheck(config);
-      }
-      if (config.isRunStaticAnalysis()) {
-        staticAnalysisCheck(config);
-      }
-    } else {
-      runtimeCheck(config);
-      staticAnalysisCheck(config);
     }
-    if (config.getJunitLocation() != null) {
-      runJUNITTests(config);
+    else {
+      Utils.exportProcessingCodeToJava(config);
+      runTests(config);
     }
-
-    System.out.println("Generating a CSV containing the results.");
-    ReportMaker.addDataToCSV(config.RESULT_CSV_LOCATION);
 
     // Clean up the temporary folder.
     config.removeTemporaryFolder();
-
-    // TODO need to trigger multithreading when folder is passed in instead of individual file.
-
-  }
-
-  private static void runThread(
-      File[] filesList, int numberofThreads, int thread, int filesPerThread, int remainingFiles) {
-    // assigning files equallyto each thread and assigning remaining files to last thread
-    List<File> inFiles = new ArrayList<File>();
-    for (int i = thread * filesPerThread; i < (thread + 1) * filesPerThread; i++) {
-      inFiles.add(filesList[i]);
-    }
-    if (thread == numberofThreads - 1 && remainingFiles > 0) {
-      for (int j = filesList.length - remainingFiles; j < filesList.length; j++) {
-        inFiles.add(filesList[j]);
-
-        // process files
-        for (File file : inFiles) {
-          System.out.println(
-              "Processing file: "
-                  + file.getName()
-                  + " on thread: "
-                  + Thread.currentThread().getName());
-        }
-      }
-    }
   }
 
   private void runJUNITTests(Config config) {
