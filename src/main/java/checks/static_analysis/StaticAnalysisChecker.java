@@ -33,8 +33,6 @@ public class StaticAnalysisChecker {
       return "";
     }
 
-    System.out.println("Running static analysis tool at " + pathToExecutable);
-
     arguments.add(0, pathToExecutable);
 
     String result = "";

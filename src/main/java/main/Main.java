@@ -1,6 +1,7 @@
 package main;
 
 import checks.junit.JUnitRunner;
+import org.apache.commons.lang3.RandomStringUtils;
 import reporting.TestResult;
 import checks.runtime.RuntimeChecker;
 import checks.static_analysis.StaticAnalysisChecker;
@@ -8,9 +9,13 @@ import reporting.ReportMaker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File;
 
 // TODO test coverage.
 // TODO comments.
+// TODO Make results folder.
+// Prerequisite - The students will name their project folders with their student id.
+
 // TODO Error handling.
 // TODO clean up output.
 // TODO clean up reporting
@@ -28,30 +33,51 @@ public class Main {
     Utils.parseCommandLineArguments(args, config);
     config.checkOS();
     config.getWorkingDirectory();
-    Utils.exportProcessingCodeToJava(config);
+  }
+
+  private void runTests(Config config) {
+    if(config.isRunIndividual())
+    {
+      if(config.isRunRuntimeCheck()) {
+        runtimeCheck(config);
+      }
+      if(config.isRunStaticAnalysis()){
+        staticAnalysisCheck(config);
+      }
+    }
+    else {
+      runtimeCheck(config);
+      staticAnalysisCheck(config);
+    }
+
+    if (config.getJunitLocation() != null) {
+      runJUNITTests(config);
+    }
+    System.out.println("Generating a CSV containing the results.");
+    ReportMaker.addDataToCSV(config.getResultsCSVLocation());
   }
 
   public Main(String[] args) {
     Config config = new Config();
     setup(args, config);
 
-    if (config.isRunIndividual()) {
-      if (config.isRunRuntimeCheck()) {
-        runtimeCheck(config);
-      }
-      if (config.isRunStaticAnalysis()) {
-        staticAnalysisCheck(config);
+    if (config.isRunMultiple()) {
+      File projectsDir = new File(config.getProjectDirectory());
+      for (File file : projectsDir.listFiles()) {
+        if (!file.isDirectory()) continue;
+
+        config.setProjectDirectory(file.getAbsolutePath());
+        config.setTempLocation(
+            config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
+
+        Utils.exportProcessingCodeToJava(config);
+        config.setResultsCSVLocation("./" + file.toPath().getFileName() + ".csv");
+        runTests(config);
       }
     } else {
-      runtimeCheck(config);
-      staticAnalysisCheck(config);
+      Utils.exportProcessingCodeToJava(config);
+      runTests(config);
     }
-    if (config.getJunitLocation() != null) {
-      runJUNITTests(config);
-    }
-
-    System.out.println("Generating a CSV containing the results.");
-    ReportMaker.addDataToCSV(config.RESULT_CSV_LOCATION);
 
     // Clean up the temporary folder.
     config.removeTemporaryFolder();
