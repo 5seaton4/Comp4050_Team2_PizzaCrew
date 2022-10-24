@@ -31,11 +31,17 @@ public class Main {
 
   private void runTests(Config config) {
 
+<<<<<<< HEAD
     if(config.isRunIndividual())
     {
       if(config.isRunRuntimeCheck()) {
       }
       if(config.isRunStaticAnalysis()){
+=======
+    if (config.isRunIndividual()) {
+      if (config.isRunRuntimeCheck()) {}
+      if (config.isRunStaticAnalysis()) {
+>>>>>>> Multithreading-running-multiple-tests
         staticAnalysisCheck(config);
       }
     }
@@ -44,7 +50,11 @@ public class Main {
       staticAnalysisCheck(config);
     }
 
+<<<<<<< HEAD
     if(config.getJunitLocation() != null) {
+=======
+    if (config.getJunitLocation() != null) {
+>>>>>>> Multithreading-running-multiple-tests
       runJUNITTests(config);
     }
     System.out.println("Generating a CSV containing the results.");
@@ -55,6 +65,7 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
+<<<<<<< HEAD
     if(config.isRunMultiple()) {
       File projectsDir = new File(config.getProjectDirectory());
       for (File file : projectsDir.listFiles()) {
@@ -62,16 +73,32 @@ public class Main {
 
         config.setProjectDirectory(file.getAbsolutePath());
         config.setTempLocation(config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
+=======
+    if (config.isRunMultiple()) {
+      File projectsDir = new File(config.getProjectDirectory());
+      for (File file : projectsDir.listFiles()) {
+        if (!file.isDirectory()) continue;
+
+        config.setProjectDirectory(file.getAbsolutePath());
+        config.setTempLocation(
+            config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
+>>>>>>> Multithreading-running-multiple-tests
 
         Utils.exportProcessingCodeToJava(config);
         config.setResultsCSVLocation("./" + file.toPath().getFileName() + ".csv");
         runTests(config);
       }
+    } else {
+      Utils.exportProcessingCodeToJava(config);
+      runTests(config);
     }
+<<<<<<< HEAD
     else {
       Utils.exportProcessingCodeToJava(config);
       runTests(config);
     }
+=======
+>>>>>>> Multithreading-running-multiple-tests
 
     // Clean up the temporary folder.
     config.removeTemporaryFolder();
