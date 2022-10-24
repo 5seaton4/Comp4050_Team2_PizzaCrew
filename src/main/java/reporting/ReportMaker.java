@@ -15,15 +15,11 @@ public class ReportMaker {
   public static String STUDENT_ID;
   public static ArrayList<TestResult> results = new ArrayList<TestResult>();
 
-  public static void addDataToReport(
-      TestResult
-          tRO) {
+  public static void addDataToReport(TestResult tRO) {
     results.add(tRO);
   }
 
-  public static void addDataToCSV(
-      String
-          outputFile) {
+  public static void addDataToCSV(String outputFile) {
     // case where not valid by *this point* but ¯\_(ツ)_/¯
     File file = new File(outputFile);
     try {
@@ -31,7 +27,7 @@ public class ReportMaker {
 
       CSVWriter writer =
           new CSVWriter(
-                  fileWriter,
+              fileWriter,
               ' ',
               CSVWriter.NO_QUOTE_CHARACTER,
               CSVWriter.DEFAULT_ESCAPE_CHARACTER,

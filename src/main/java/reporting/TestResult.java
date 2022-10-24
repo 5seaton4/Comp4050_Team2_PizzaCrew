@@ -1,6 +1,6 @@
 package reporting;
 
-//TODO add that it is optional to pass in value and result.
+// TODO add that it is optional to pass in value and result.
 
 public class TestResult {
   // TODO these variables need to be accessed via getters and setters.
@@ -9,7 +9,7 @@ public class TestResult {
   public float value = -1; // mark value of test
   public boolean result; // result of test mark, pass or fail (true/false)
   public boolean numberResult;
-  //TODO what is this can we remove it.
+  // TODO what is this can we remove it.
   public int orderOfAppearance; // appearance order of the test
   public String testOutput;
 
@@ -23,7 +23,17 @@ public class TestResult {
       passOrFail = "Fail";
     }
 
-    String csvRow = "Test: " + orderOfAppearance + " ; " + desc + " ; Value: " + (numberResult ? value : "N/A") + "% ; Mark Received: " + (numberResult ? passOrFail : "N/A") + "; Test Output: " + (testOutput != "" ? testOutput : "N/A");
+    String csvRow =
+        "Test: "
+            + orderOfAppearance
+            + " ; "
+            + desc
+            + " ; Value: "
+            + (numberResult ? value : "N/A")
+            + "% ; Mark Received: "
+            + (numberResult ? passOrFail : "N/A")
+            + "; Test Output: "
+            + (testOutput != "" ? testOutput : "N/A");
     return csvRow;
   }
 }
