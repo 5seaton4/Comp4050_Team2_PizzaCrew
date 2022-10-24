@@ -14,8 +14,14 @@ import java.io.File;
 // TODO test coverage.
 // TODO comments.
 // TODO Make results folder.
-
 // Prerequisite - The students will name their project folders with their student id.
+
+// TODO Error handling.
+// TODO clean up output.
+// TODO clean up reporting
+// Get rid of any TODOs
+// Update README
+// Create release branch with docs and instructions.
 
 public class Main {
 
@@ -30,18 +36,12 @@ public class Main {
   }
 
   private void runTests(Config config) {
-
-<<<<<<< HEAD
     if(config.isRunIndividual())
     {
       if(config.isRunRuntimeCheck()) {
+        runtimeCheck(config);
       }
       if(config.isRunStaticAnalysis()){
-=======
-    if (config.isRunIndividual()) {
-      if (config.isRunRuntimeCheck()) {}
-      if (config.isRunStaticAnalysis()) {
->>>>>>> Multithreading-running-multiple-tests
         staticAnalysisCheck(config);
       }
     }
@@ -50,11 +50,7 @@ public class Main {
       staticAnalysisCheck(config);
     }
 
-<<<<<<< HEAD
-    if(config.getJunitLocation() != null) {
-=======
     if (config.getJunitLocation() != null) {
->>>>>>> Multithreading-running-multiple-tests
       runJUNITTests(config);
     }
     System.out.println("Generating a CSV containing the results.");
@@ -65,15 +61,6 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-<<<<<<< HEAD
-    if(config.isRunMultiple()) {
-      File projectsDir = new File(config.getProjectDirectory());
-      for (File file : projectsDir.listFiles()) {
-        if(!file.isDirectory()) continue;
-
-        config.setProjectDirectory(file.getAbsolutePath());
-        config.setTempLocation(config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
-=======
     if (config.isRunMultiple()) {
       File projectsDir = new File(config.getProjectDirectory());
       for (File file : projectsDir.listFiles()) {
@@ -82,7 +69,6 @@ public class Main {
         config.setProjectDirectory(file.getAbsolutePath());
         config.setTempLocation(
             config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
->>>>>>> Multithreading-running-multiple-tests
 
         Utils.exportProcessingCodeToJava(config);
         config.setResultsCSVLocation("./" + file.toPath().getFileName() + ".csv");
@@ -92,13 +78,6 @@ public class Main {
       Utils.exportProcessingCodeToJava(config);
       runTests(config);
     }
-<<<<<<< HEAD
-    else {
-      Utils.exportProcessingCodeToJava(config);
-      runTests(config);
-    }
-=======
->>>>>>> Multithreading-running-multiple-tests
 
     // Clean up the temporary folder.
     config.removeTemporaryFolder();
@@ -114,7 +93,7 @@ public class Main {
 
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
-    // TODO these arguments need configuring.
+    // TODO create own ruleset - https://pmd.github.io/latest/pmd_rules_java.html
     ArrayList<String> arguments =
         new ArrayList<String>(
             Arrays.asList(
@@ -129,9 +108,12 @@ public class Main {
       arguments.add(0, "pmd");
     }
 
-    // TODO this needs to capture the output to determine if its passed or failed, and then add it
-    // to the results.
-    staticAnalysis.runExecutableWithArguments(config, arguments);
+    String result = staticAnalysis.runExecutableWithArguments(config, arguments);
+    TestResult testResult = new TestResult;
+    testResult.name = "Static Analysis";
+    testResult.desc = "The Static Analysis tool PMD has been run on the Java code to devise code quality.";
+    testResult.testOutput = result;
+    ReportMaker.addDataToReport(testResult);
   }
 
   private void runtimeCheck(Config config) {
