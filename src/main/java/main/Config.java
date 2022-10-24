@@ -15,10 +15,6 @@ public class Config {
   private String junitLocation;
   private String projectName;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Multithreading-running-multiple-tests
   public String resultsCSVLocation = "./results.csv";
 
   private boolean runIndividual;

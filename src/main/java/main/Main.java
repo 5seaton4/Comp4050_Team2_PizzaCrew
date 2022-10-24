@@ -13,15 +13,18 @@ import java.io.File;
 
 // TODO test coverage.
 // TODO comments.
-// TODO Make results folder.
-// Prerequisite - The students will name their project folders with their student id.
 
 // TODO Error handling.
-// TODO clean up output.
-// TODO clean up reporting
+// TODO clean up console output and CSV output
+
 // Get rid of any TODOs
 // Update README
 // Create release branch with docs and instructions.
+
+// Prerequisite - The students will submit a folder named their student id with the project folder
+// inside IE 44613911/Flocking/flocking.pde
+
+// TODO Make results folder.
 
 public class Main {
 
@@ -36,16 +39,14 @@ public class Main {
   }
 
   private void runTests(Config config) {
-    if(config.isRunIndividual())
-    {
-      if(config.isRunRuntimeCheck()) {
+    if (config.isRunIndividual()) {
+      if (config.isRunRuntimeCheck()) {
         runtimeCheck(config);
       }
-      if(config.isRunStaticAnalysis()){
+      if (config.isRunStaticAnalysis()) {
         staticAnalysisCheck(config);
       }
-    }
-    else {
+    } else {
       runtimeCheck(config);
       staticAnalysisCheck(config);
     }
@@ -109,9 +110,10 @@ public class Main {
     }
 
     String result = staticAnalysis.runExecutableWithArguments(config, arguments);
-    TestResult testResult = new TestResult;
+    TestResult testResult = new TestResult();
     testResult.name = "Static Analysis";
-    testResult.desc = "The Static Analysis tool PMD has been run on the Java code to devise code quality.";
+    testResult.desc =
+        "The Static Analysis tool PMD has been run on the Java code to devise code quality.";
     testResult.testOutput = result;
     ReportMaker.addDataToReport(testResult);
   }
