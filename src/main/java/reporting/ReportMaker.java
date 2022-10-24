@@ -25,10 +25,10 @@ public class ReportMaker {
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
     results.add(tRO);
   }
+
   public static void addSA(String saline) {
     SAResults.add(saline);
   }
-
 
   public static void addDataToCSV(
       String
@@ -48,7 +48,7 @@ public class ReportMaker {
 
       // Setup csv and add student ID
       List<String[]> data =
-              new ArrayList<String[]>(); // list which maintains our data to be written
+          new ArrayList<String[]>(); // list which maintains our data to be written
       int noOfRow = results.size();
       String SID = ("Student ID: , " + STUDENT_ID);
       String[] SIDINFO = SID.split(" ");
@@ -56,39 +56,45 @@ public class ReportMaker {
 
       // runtime results printed on one line, no need for anything beyond title
       String RTTResult;
-      if (runtimeresult) {RTTResult = "Pass";} else {RTTResult = "Fail";}
+      if (runtimeresult) {
+        RTTResult = "Pass";
+      } else {
+        RTTResult = "Fail";
+      }
       String title = "Runtime test result: ," + RTTResult;
       String[] titleadd = title.split(" ");
       data.add(titleadd);
-
-
 
       title = "Static Analysis Result: ";
       titleadd = title.split(" ");
       data.add(titleadd);
 
       // Static analysis printing
-      //todo what happens if the static analysis has a comma in it? This will ruin .csv formatting :(
-      for (int i = 0; i < SAResults.size()-1; i++) {
-        if (i > 11) { // skips import statements as these are made by processing-java and not relevant to student
+      // todo what happens if the static analysis has a comma in it? This will ruin .csv formatting
+      // :(
+      for (int i = 0; i < SAResults.size() - 1; i++) {
+        if (i
+            > 11) { // skips import statements as these are made by processing-java and not relevant
+                    // to student
           String row = (SAResults.get(i));
           String[] rowdata = row.split(" ");
           data.add(rowdata);
         }
       }
 
-
       title = "Unit Tests Results: ";
       titleadd = title.split(" ");
       data.add(titleadd);
-    int addscore = 0;
+      int addscore = 0;
       // Junit printing
       for (int i = 0; i < noOfRow; i++) {
         // collect data from testResultObject(s)
         String row = (results.get(i).returnFormatted());
         String[] rowdata = row.split(" ");
         data.add(rowdata);
-        if (results.get(i).result)  {addscore += results.get(i).value;}
+        if (results.get(i).result) {
+          addscore += results.get(i).value;
+        }
       }
       String score = "Unit test mark: , ";
       score += String.valueOf(addscore);
