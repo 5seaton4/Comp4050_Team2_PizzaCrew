@@ -11,6 +11,12 @@ import java.util.Arrays;
 
 // TODO test coverage.
 // TODO comments.
+// TODO Error handling.
+// TODO clean up output.
+// TODO clean up reporting
+// Get rid of any TODOs
+// Update README
+// Create release branch with docs and instructions.
 
 public class Main {
 
@@ -61,7 +67,7 @@ public class Main {
 
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
-    // TODO these arguments need configuring.
+    // TODO create own ruleset - https://pmd.github.io/latest/pmd_rules_java.html
     ArrayList<String> arguments =
         new ArrayList<String>(
             Arrays.asList(
@@ -76,9 +82,12 @@ public class Main {
       arguments.add(0, "pmd");
     }
 
-    // TODO this needs to capture the output to determine if its passed or failed, and then add it
-    // to the results.
-    staticAnalysis.runExecutableWithArguments(config, arguments);
+    String result = staticAnalysis.runExecutableWithArguments(config, arguments);
+    TestResult testResult = new TestResult;
+    testResult.name = "Static Analysis";
+    testResult.desc = "The Static Analysis tool PMD has been run on the Java code to devise code quality.";
+    testResult.testOutput = result;
+    ReportMaker.addDataToReport(testResult);
   }
 
   private void runtimeCheck(Config config) {

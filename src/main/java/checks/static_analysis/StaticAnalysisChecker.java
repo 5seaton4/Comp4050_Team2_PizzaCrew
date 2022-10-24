@@ -1,6 +1,7 @@
 package checks.static_analysis;
 
 import main.Config;
+import reporting.TestResult;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,21 +25,24 @@ public class StaticAnalysisChecker {
     }
   }
 
-  public void runExecutableWithArguments(Config config, ArrayList<String> arguments) {
+  public String runExecutableWithArguments(Config config, ArrayList<String> arguments) {
     pathToExecutable = config.getStaticAnalysisLocation();
 
     if (!doesExecutableExist()) {
       System.err.println("Error - Executable does not exist.");
-      return;
+      return "";
     }
+
     System.out.println("Running static analysis tool at " + pathToExecutable);
 
     arguments.add(0, pathToExecutable);
 
+    String result = "";
+
     try {
       Runtime runtime = Runtime.getRuntime();
+
       // Run the executable.
-      // TODO convoluted way of turning an ArrayList into an array..
       Process process =
           runtime.exec(Arrays.copyOf(arguments.toArray(), arguments.size(), String[].class));
 
@@ -46,10 +50,10 @@ public class StaticAnalysisChecker {
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
       // Read the output from the command
-      System.out.println("Static Analysis Output\n");
+      System.out.println("Static Analysis Display\n");
       String s = null;
       while ((s = stdInput.readLine()) != null) {
-        System.out.println(s);
+        result += s;
       }
 
       // Read any errors from the attempted command
@@ -64,5 +68,7 @@ public class StaticAnalysisChecker {
       // TODO(Jack): Error handling
       e.printStackTrace();
     }
+
+    return result;
   }
 }
