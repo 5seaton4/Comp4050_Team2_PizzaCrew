@@ -4,10 +4,16 @@ import main.Config;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import com.opencsv.CSVWriter;
+
+import reporting.TestResult;
 
 public class StaticAnalysisChecker {
 
@@ -49,17 +55,41 @@ public class StaticAnalysisChecker {
       System.out.println("Static Analysis Display\n");
       String s = null;
       ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-      ArrayList<String> subList = new ArrayList<String>();
       int a = 0;
       while ((s = stdInput.readLine()) != null) {
 
-        String[] arr = s.split(" ");
-
-        for (int i = 0; i < 2; i++) {
-          list.get(0).add(arr[i]);
+        String[] arr = s.split(":");
+        ArrayList<String> subList = new ArrayList<String>();
+        for (int i = 0; i < arr.length; i++) {
+          subList.add(arr[i]);
         }
-
+        list.add(subList);
         System.out.println(s);
+      }
+
+      String csvFilename = "C:/Users/abhin/Documents/COMP4050Pizza/Comp4050_Team2_PizzaCrew/StaticResults.csv";
+      try {
+          CSVWriter writer = new CSVWriter(new FileWriter(csvFilename));
+          List<String[]> csvData = new ArrayList<String[]>();
+          
+          String[] header="Line Number,Error,Description".split(",");
+          csvData.add(header);
+
+          for(int z=0;z<list.size();z++) {
+            String str="";
+            System.out.println("OUPUTTTTTTTTTT" + list.get(z).size());
+              for(int y=2;y<list.get(z).size();y++) {
+                 str += list.get(z).get(y);
+            }
+            String[] content = str.split(",");
+            csvData.add(content);
+          }
+          
+          writer.writeAll(csvData);
+          writer.close();
+          System.out.println("CSV file created succesfully.");
+      } catch (Exception e) {
+          System.out.println("exception :" + e.getMessage());
       }
 
       // Read any errors from the attempted command
