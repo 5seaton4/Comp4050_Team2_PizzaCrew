@@ -7,4 +7,8 @@ public class TestFile {
     Flocking flocking = new Flocking();
     assertEquals(true, true);
   }
+  @Test
+  public void testFail() {
+    assertEquals(true,false);
+  }
 }

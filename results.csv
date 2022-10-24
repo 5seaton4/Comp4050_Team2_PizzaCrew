@@ -19,5 +19,6 @@ C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported
 C:\Users\Ethan Darnley\Documents\GitHub\Comp4050_Team2_PizzaCrew\target\exported-processing-code\source\Flocking.java:236:	UselessParentheses:	Useless parentheses.
 Unit Tests Results:
 Test: 0 , The program is run to ascertain whether there is any runtime errors. , Value: 0.0% , Mark received: Pass
-Test: 0 , Result of JUnit tests passed into the program. , Value: 1.0% , Mark received: Fail
+Test: 0 , Result of JUnit tests passed into the program. , Value: 0.0% , Mark received: Fail
 Unit test mark: , 0
+testFail(TestFile): expected:<true> but was:<false>

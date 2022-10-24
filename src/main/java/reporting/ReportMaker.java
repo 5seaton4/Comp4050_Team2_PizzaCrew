@@ -16,10 +16,14 @@ public class ReportMaker {
   public static ArrayList<TestResult> results = new ArrayList<TestResult>();
   public static ArrayList<String> SAResults = new ArrayList<String>();
   public static boolean runtimeresult;
+  public static ArrayList<String> failurecodes = new ArrayList<String>();
 
   private static final String CSV_FILE_PATH =
       "./result.csv"; // todo discuss appropriate filepath for result.csv
 
+  public static void addFailureReasons(String failreason) {
+    failurecodes.add(failreason);
+  }
   public static void addDataToReport(
       TestResult
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
@@ -94,6 +98,13 @@ public class ReportMaker {
       score += String.valueOf(addscore);
       titleadd = score.split(" "); // using titleadd over new var as to save space
       data.add(titleadd);
+
+      if (failurecodes.size() > 0) {
+        for (int y = 0 ; y<failurecodes.size();y++){
+          titleadd = failurecodes.get(y).split(" ");
+          data.add(titleadd);
+        }
+      }
 
       writer.writeAll(data); // write all "data" to CSV
 

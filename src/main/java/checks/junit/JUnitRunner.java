@@ -92,6 +92,7 @@ public class JUnitRunner {
       System.out.println("Failures: ");
       for (Failure failure : result.getFailures()) {
         System.out.println(failure.toString());
+        ReportMaker.addFailureReasons(failure.toString());
       }
     }
 

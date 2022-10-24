@@ -7,23 +7,44 @@ public class TestResult {
   public float value; // mark value of test
   public boolean result; // result of test mark, pass or fail (true/false)
   public int orderOfAppearance; // appearance order of the test
-
+  public String failurecode;
   public String returnFormatted() {
     // find a *neat* way of checking all variables have been instantiated before running this
     // method.
     String passOrFail;
-    if (result == true) {
-      passOrFail = "Pass";
-    } else {
+    if (result == false) {
       passOrFail = "Fail";
+      /*
+      return ("Test: "
+              + orderOfAppearance
+              + " , "
+              + desc
+              + " , Value: "
+              + value
+              + "% , Mark received: "
+              + passOrFail
+              + "Failure reason:,"
+              + failurecode);
+       */
     }
+    else {passOrFail = "Pass";}
+    /*
     return ("Test: "
-        + orderOfAppearance
-        + " , "
-        + desc
-        + " , Value: "
-        + value
-        + "% , Mark received: "
-        + passOrFail);
+            + orderOfAppearance
+            + " , "
+            + desc
+            + " , Value: "
+            + value
+            + "% , Mark received: "
+            + passOrFail);
+     */
+    return ("Test: "
+            + orderOfAppearance
+            + " , "
+            + desc
+            + " , Value: "
+            + value
+            + "% , Mark received: "
+            + passOrFail);
   }
 }
