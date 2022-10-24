@@ -114,6 +114,20 @@ public class JUnitRunner {
     testResult.desc = "Result of JUnit tests passed into the program.";
     testResult.value = percentageResult;
     testResult.result = (percentageResult >= 50) ? true : false;
+    testResult.testOutput = "";
+    testResult.testOutput += "Number of Tests Run: " + result.getRunCount();
+    testResult.testOutput += "Number of Failures: " + result.getFailureCount();
+    testResult.testOutput += "Number of Ignored Tests: " + result.getIgnoreCount();
+    testResult.testOutput += "Total Test Runtime: " + result.getRunTime() + " seconds";
+    testResult.testOutput += "Successful: " + result.wasSuccessful();
+
+    if (result.getFailureCount() > 0) {
+      testResult.testOutput += "Failures: ";
+      for (Failure failure : result.getFailures()) {
+        testResult.testOutput += failure.toString();
+      }
+    }
+
     ReportMaker.addDataToReport(testResult);
   }
 }

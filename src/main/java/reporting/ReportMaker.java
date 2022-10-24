@@ -15,26 +15,23 @@ public class ReportMaker {
   public static String STUDENT_ID;
   public static ArrayList<TestResult> results = new ArrayList<TestResult>();
 
-  private static final String CSV_FILE_PATH =
-      "./result.csv"; // todo discuss appropriate filepath for result.csv
-
   public static void addDataToReport(
       TestResult
-          tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
+          tRO) {
     results.add(tRO);
   }
 
   public static void addDataToCSV(
       String
-          output) { // todo check validity of "results" before running this method? Shouldn't be a
+          outputFile) {
     // case where not valid by *this point* but ¯\_(ツ)_/¯
-    File file = new File(output);
+    File file = new File(outputFile);
     try {
-      FileWriter outputfile = new FileWriter(file);
+      FileWriter fileWriter = new FileWriter(outputFile);
 
       CSVWriter writer =
           new CSVWriter(
-              outputfile,
+                  fileWriter,
               ' ',
               CSVWriter.NO_QUOTE_CHARACTER,
               CSVWriter.DEFAULT_ESCAPE_CHARACTER,
