@@ -39,7 +39,8 @@ public class Utils {
     runRuntimeOption.setRequired(false);
     options.addOption(runRuntimeOption);
 
-    Option multipleProjectsOption = new Option("m", "multiple-projects", false, "Passing in Multiple Projects");
+    Option multipleProjectsOption =
+        new Option("m", "multiple-projects", false, "Passing in Multiple Projects");
     multipleProjectsOption.setRequired(false);
     options.addOption(multipleProjectsOption);
 
@@ -128,18 +129,17 @@ public class Utils {
     File[] projectDirFiles = projectDir.listFiles();
     int dirCount = 0;
     int dirId = 0;
-    for(int i = 0; i < projectDirFiles.length; i++)
-    {
+    for (int i = 0; i < projectDirFiles.length; i++) {
       File file = projectDirFiles[i];
-      if(file.isDirectory())
-      {
+      if (file.isDirectory()) {
         dirCount++;
         dirId = i;
       }
     }
 
-    if(dirCount != 1) {
-      System.err.println("Error project directory should only contain one folder containing the PDE files.");
+    if (dirCount != 1) {
+      System.err.println(
+          "Error project directory should only contain one folder containing the PDE files.");
       System.exit(1);
     }
 

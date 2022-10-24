@@ -31,20 +31,17 @@ public class Main {
 
   private void runTests(Config config) {
 
-    if(config.isRunIndividual())
-    {
-      if(config.isRunRuntimeCheck()) {
-      }
-      if(config.isRunStaticAnalysis()){
+    if (config.isRunIndividual()) {
+      if (config.isRunRuntimeCheck()) {}
+      if (config.isRunStaticAnalysis()) {
         staticAnalysisCheck(config);
       }
-    }
-    else {
+    } else {
       runtimeCheck(config);
       staticAnalysisCheck(config);
     }
 
-    if(config.getJunitLocation() != null) {
+    if (config.getJunitLocation() != null) {
       runJUNITTests(config);
     }
     System.out.println("Generating a CSV containing the results.");
@@ -55,20 +52,20 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-    if(config.isRunMultiple()) {
+    if (config.isRunMultiple()) {
       File projectsDir = new File(config.getProjectDirectory());
       for (File file : projectsDir.listFiles()) {
-        if(!file.isDirectory()) continue;
+        if (!file.isDirectory()) continue;
 
         config.setProjectDirectory(file.getAbsolutePath());
-        config.setTempLocation(config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
+        config.setTempLocation(
+            config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
 
         Utils.exportProcessingCodeToJava(config);
         config.setResultsCSVLocation("./" + file.toPath().getFileName() + ".csv");
         runTests(config);
       }
-    }
-    else {
+    } else {
       Utils.exportProcessingCodeToJava(config);
       runTests(config);
     }

@@ -15,7 +15,6 @@ public class Config {
   private String junitLocation;
   private String projectName;
 
-
   public String resultsCSVLocation = "./results.csv";
 
   private boolean runIndividual;
