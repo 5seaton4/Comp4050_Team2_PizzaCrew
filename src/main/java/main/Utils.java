@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 public class Utils {
   public static void parseCommandLineArguments(String[] args, Config config) {
     Options options = new Options();
+
     Option processingLocation =
         new Option("p", "processing-java-location", true, "Processing exe location");
     processingLocation.setRequired(true);
@@ -22,6 +23,21 @@ public class Utils {
         new Option("t", "project-location", true, "Processing project to be tested location");
     projectLocation.setRequired(true);
     options.addOption(projectLocation);
+
+    Option testFile =
+        new Option("j", "junit-location", true, "JUNIT file to run against the processing code");
+    testFile.setRequired(false);
+    options.addOption(testFile);
+
+    Option runStaticOption =
+        new Option("a", "run-static-analysis", false, "Run the static analysis test");
+    runStaticOption.setRequired(false);
+    options.addOption(runStaticOption);
+
+    Option runRuntimeOption =
+        new Option("r", "run-runtime-check", false, "Run the runtime check test");
+    runRuntimeOption.setRequired(false);
+    options.addOption(runRuntimeOption);
 
     Option studentIdOption = new Option("s", "student-id", true, "Student ID");
     studentIdOption.setRequired(false);
@@ -42,6 +58,20 @@ public class Utils {
     String processingFileLocation = cmd.getOptionValue("processing-java-location");
     String projectDir = cmd.getOptionValue("project-location");
     String studentId = cmd.getOptionValue("student-id");
+    String runRuntimeCheck = cmd.getOptionValue("run-runtime-check");
+    String runStaticAnalysis = cmd.getOptionValue("run-static-analysis");
+
+    if ((runStaticAnalysis != null) || (runRuntimeCheck != null)) {
+      config.setRunIndividual(true);
+    }
+
+    if (runRuntimeCheck != null) {
+      config.setRunRuntimeCheck(true);
+    }
+
+    if (runStaticAnalysis != null) {
+      config.setRunStaticAnalysis(true);
+    }
 
     // Check the locations are valid.
     File processingExe = new File(processingFileLocation);
@@ -51,10 +81,20 @@ public class Utils {
           "Error processing-java-location passed in does not exist or is a directory.");
       System.exit(1);
     }
-
     if (!projectFile.isDirectory()) {
       System.err.println("Error project location passed in does not exist or is not a directory.");
       System.exit(1);
+    }
+
+    String junitFileLocation = cmd.getOptionValue("junit-location");
+    // Check the locations are valid.
+    if (junitFileLocation != null) {
+      File junitFile = new File(junitFileLocation);
+      if (!junitFile.isFile()) {
+        System.err.println("Error junit-location passed in does not exist or is a directory.");
+        System.exit(1);
+      }
+      config.setJunitLocation(junitFileLocation);
     }
 
     config.setProcessingLocation(processingFileLocation);
@@ -74,6 +114,9 @@ public class Utils {
 
     // Create a temp directory for the java code.
     Path tempPath = Paths.get(config.getTempLocation());
+
+    // TODO Remove the temp location if it is already there.
+    // TODO Or warn the user what the issue is.
 
     String[] arguments = {
       config.getProcessingLocation(),

@@ -1,6 +1,6 @@
 package main;
 
-import checks.junit.JUnitHelper;
+import checks.junit.JUnitRunner;
 import reporting.TestResult;
 import checks.runtime.RuntimeChecker;
 import checks.static_analysis.StaticAnalysisChecker;
@@ -9,13 +9,14 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// TODO Update README
-// TODO working on Windows.
-
-// TODO processing-java must be installed
-
 // TODO test coverage.
 // TODO comments.
+// TODO Error handling.
+// TODO clean up output.
+// TODO clean up reporting
+// Get rid of any TODOs
+// Update README
+// Create release branch with docs and instructions.
 
 public class Main {
 
@@ -34,9 +35,20 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-    runtimeCheck(config);
-    staticAnalysisCheck(config);
-    runJUNITTests();
+    if (config.isRunIndividual()) {
+      if (config.isRunRuntimeCheck()) {
+        runtimeCheck(config);
+      }
+      if (config.isRunStaticAnalysis()) {
+        staticAnalysisCheck(config);
+      }
+    } else {
+      runtimeCheck(config);
+      staticAnalysisCheck(config);
+    }
+    if (config.getJunitLocation() != null) {
+      runJUNITTests(config);
+    }
 
     System.out.println("Generating a CSV containing the results.");
     ReportMaker.addDataToCSV(config.RESULT_CSV_LOCATION);
@@ -45,14 +57,9 @@ public class Main {
     config.removeTemporaryFolder();
   }
 
-  // TODO we need to pass in JUNIT tests and have them run on the exported processing code.
-  private void runJUNITTests() {
-    TestResult teo1 = new TestResult();
-    TestResult teo2 = new TestResult();
-
-    JUnitHelper.runTests(teo1, teo2);
-    ReportMaker.addDataToReport(teo1);
-    ReportMaker.addDataToReport(teo2);
+  private void runJUNITTests(Config config) {
+    JUnitRunner runner = new JUnitRunner();
+    runner.runJUNITTests(config);
   }
 
   private void staticAnalysisCheck(Config config) {
@@ -60,7 +67,7 @@ public class Main {
 
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
-    // TODO these arguments need configuring.
+    // TODO create own ruleset - https://pmd.github.io/latest/pmd_rules_java.html
     ArrayList<String> arguments =
         new ArrayList<String>(
             Arrays.asList(
@@ -75,9 +82,12 @@ public class Main {
       arguments.add(0, "pmd");
     }
 
-    // TODO this needs to capture the output to determine if its passed or failed, and then add it
-    // to the results.
-    staticAnalysis.runExecutableWithArguments(config, arguments);
+    String result = staticAnalysis.runExecutableWithArguments(config, arguments);
+    TestResult testResult = new TestResult;
+    testResult.name = "Static Analysis";
+    testResult.desc = "The Static Analysis tool PMD has been run on the Java code to devise code quality.";
+    testResult.testOutput = result;
+    ReportMaker.addDataToReport(testResult);
   }
 
   private void runtimeCheck(Config config) {
