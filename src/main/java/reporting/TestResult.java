@@ -1,9 +1,9 @@
 package reporting;
 
 /**
- * This class is responsible for holding the test results of the test module which then gets passed to the ReportMaker class to be turned into a CSV.
+ * This class is responsible for holding the test results of the test module which then gets passed
+ * to the ReportMaker class to be turned into a CSV.
  */
-
 public class TestResult {
   public String name; // name of test (if provided and relevant)
   public String desc; // description of test (if provided and relevant)

@@ -19,16 +19,18 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 /**
- * This class is responsible for running the JUNIT tests that has been passed in by the user. It will compile
- * all of the exported processing code along with the JUNIT tests and run them against all Class files.
+ * This class is responsible for running the JUNIT tests that has been passed in by the user. It
+ * will compile all of the exported processing code along with the JUNIT tests and run them against
+ * all Class files.
  */
-
 public class JUnitRunner {
 
   public JUnitRunner() {}
 
   /**
-   * This function is responsible for moving the test file into the java source directory to then be compiled.
+   * This function is responsible for moving the test file into the java source directory to then be
+   * compiled.
+   *
    * @param config the config class which holds all needed config for the application.
    * @return
    */
@@ -52,8 +54,9 @@ public class JUnitRunner {
   }
 
   /**
-   * This function is responsible for compiling the JUNIT code along with the Java code.
-   * It will then run the JUNIT tests/
+   * This function is responsible for compiling the JUNIT code along with the Java code. It will
+   * then run the JUNIT tests/
+   *
    * @param config the config class which holds all needed config for the application.
    * @param testFile location of the JUNIT test file.
    * @return returns the JUNIT result object.
@@ -103,8 +106,9 @@ public class JUnitRunner {
   }
 
   /**
-   * This function will take in the JUNIT result object and will output the results to the command line
-   * and will also calculate the final grade for this module.
+   * This function will take in the JUNIT result object and will output the results to the command
+   * line and will also calculate the final grade for this module.
+   *
    * @param result the JUNIT result object.
    * @return returns the score calculated from the test results.
    */
@@ -128,13 +132,13 @@ public class JUnitRunner {
 
   /**
    * The function responsible for calling the other methods in the class.
+   *
    * @param config the config class which holds all needed config for the application.
    */
-
   public void runJUNITTests(Config config) {
     String testFileLocation = moveTestFileIntoSourceDirectory(config);
 
-    if(testFileLocation == "") {
+    if (testFileLocation == "") {
       System.err.println("Skipping JUNIT tests due to error.");
       return;
     }

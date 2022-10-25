@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class is responsible for creating the CSV based on an array of TestResults.
- */
-
+/** This class is responsible for creating the CSV based on an array of TestResults. */
 public class ReportMaker {
   public static String STUDENT_ID;
   public static ArrayList<TestResult> results = new ArrayList<TestResult>();

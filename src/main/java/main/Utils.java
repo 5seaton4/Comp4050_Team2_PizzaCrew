@@ -13,16 +13,15 @@ import java.nio.file.Paths;
 /**
  * This class is responsible for holding utility functions that are used else where in the program.
  */
-
 public class Utils {
 
   /**
-   * This function will parse the command line arguments passed in by the user and will set variables in the config class to be used elsewhere
-   * in the program.
+   * This function will parse the command line arguments passed in by the user and will set
+   * variables in the config class to be used elsewhere in the program.
+   *
    * @param args the arguments passed in by the User.
    * @param config the config class which holds all needed config for the application.
    */
-
   public static void parseCommandLineArguments(String[] args, Config config) {
     Options options = new Options();
 
@@ -64,7 +63,7 @@ public class Utils {
     HelpFormatter formatter = new HelpFormatter();
     CommandLine cmd = null;
 
-    //Try to parse the command line, if there are errors then print the help message.
+    // Try to parse the command line, if there are errors then print the help message.
     try {
       cmd = parser.parse(options, args);
     } catch (ParseException e) {
@@ -125,10 +124,11 @@ public class Utils {
   }
 
   /**
-   * This function will export the processing code to java. It will also create the temporary location that the files will go into.
+   * This function will export the processing code to java. It will also create the temporary
+   * location that the files will go into.
+   *
    * @param config the config class which holds all needed config for the application.
    */
-
   public static void exportProcessingCodeToJava(Config config) {
     System.out.println("Exporting processing code to Java.");
 
@@ -141,7 +141,7 @@ public class Utils {
     Path tempPath = Paths.get(config.getTempLocation());
 
     File tempFilePath = new File(config.getTempLocation());
-    if(tempFilePath.isDirectory()) {
+    if (tempFilePath.isDirectory()) {
       config.removeTemporaryFolder();
     }
 
@@ -196,7 +196,7 @@ public class Utils {
       System.out.println("Closing process.");
       process.destroy();
 
-      //Calculates the app name from the processing folder name.
+      // Calculates the app name from the processing folder name.
       Utils.getAppNameFromExecutable(config);
     } catch (IOException e) {
       e.printStackTrace();
@@ -205,9 +205,9 @@ public class Utils {
 
   /**
    * This function will get the app name from the processing folder name.
+   *
    * @param config the config class which holds all needed config for the application.
    */
-
   private static void getAppNameFromExecutable(Config config) {
     File directory = new File(config.getTempLocation());
     String contents[] = directory.list();

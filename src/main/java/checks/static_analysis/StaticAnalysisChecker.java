@@ -10,18 +10,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * This class holds all the Static Analysis module code. It includes helper functions and the function which runs the static analysis tool.
+ * This class holds all the Static Analysis module code. It includes helper functions and the
+ * function which runs the static analysis tool.
  */
-
 public class StaticAnalysisChecker {
 
-  //Holds the path to the static analysis tool.
+  // Holds the path to the static analysis tool.
   private String pathToExecutable;
 
   public StaticAnalysisChecker() {}
 
   /**
    * This function will check if the static analysis executable can be found.
+   *
    * @return
    */
   public boolean doesExecutableExist() {
@@ -34,13 +35,13 @@ public class StaticAnalysisChecker {
   }
 
   /**
-   * This function is responsible for running the static analysis tool with arguments passed into the function.
+   * This function is responsible for running the static analysis tool with arguments passed into
+   * the function.
    *
    * @param config the config class which holds all needed config for the application.
    * @param arguments the arguments that will be passed to the PMD application.
    * @return
    */
-
   public String runExecutableWithArguments(Config config, ArrayList<String> arguments) {
     pathToExecutable = config.getStaticAnalysisLocation();
 
