@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo current worst case is that StudentID or results are NULL -> prints "NULL"
+/**
+ * This class is responsible for creating the CSV based on an array of TestResults.
+ */
+
 public class ReportMaker {
   public static String STUDENT_ID;
   public static ArrayList<TestResult> results = new ArrayList<TestResult>();
@@ -51,7 +54,6 @@ public class ReportMaker {
 
       writer.close();
     } catch (IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }

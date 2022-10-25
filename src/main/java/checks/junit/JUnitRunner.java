@@ -18,10 +18,20 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * This class is responsible for running the JUNIT tests that has been passed in by the user. It will compile
+ * all of the exported processing code along with the JUNIT tests and run them against all Class files.
+ */
+
 public class JUnitRunner {
 
   public JUnitRunner() {}
 
+  /**
+   * This function is responsible for moving the test file into the java source directory to then be compiled.
+   * @param config the config class which holds all needed config for the application.
+   * @return
+   */
   private String moveTestFileIntoSourceDirectory(Config config) {
     String testFileLocation = config.getJunitLocation();
 
@@ -34,11 +44,20 @@ public class JUnitRunner {
       Files.copy(testFile.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
     } catch (IOException e) {
       e.printStackTrace();
+      System.err.println("Failed to move the test file into the java source directory.");
+      return "";
     }
 
     return dest.toPath().toString();
   }
 
+  /**
+   * This function is responsible for compiling the JUNIT code along with the Java code.
+   * It will then run the JUNIT tests/
+   * @param config the config class which holds all needed config for the application.
+   * @param testFile location of the JUNIT test file.
+   * @return returns the JUNIT result object.
+   */
   private Result compileAndRunJUnitTests(Config config, String testFile) {
     // Compile all the files in the directory.
     File[] files;
@@ -73,13 +92,22 @@ public class JUnitRunner {
       result = JUnitCore.runClasses(junitTest);
     } catch (MalformedURLException e) {
       e.printStackTrace();
+      System.err.println("Failed to compile JUNIT tests.");
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
+      System.err.println("Failed to compile JUNIT tests.");
+      System.exit(1);
     }
 
     return result;
   }
 
+  /**
+   * This function will take in the JUNIT result object and will output the results to the command line
+   * and will also calculate the final grade for this module.
+   * @param result the JUNIT result object.
+   * @return returns the score calculated from the test results.
+   */
   private float parseJUnitResults(Result result) {
     System.out.println("JUNIT Tests Have Run.");
     System.out.println("Number of Tests Run: " + result.getRunCount());
@@ -98,13 +126,23 @@ public class JUnitRunner {
     return (result.getRunCount() - result.getFailureCount()) / result.getRunCount();
   }
 
+  /**
+   * The function responsible for calling the other methods in the class.
+   * @param config the config class which holds all needed config for the application.
+   */
+
   public void runJUNITTests(Config config) {
     String testFileLocation = moveTestFileIntoSourceDirectory(config);
 
+    if(testFileLocation == "") {
+      System.err.println("Skipping JUNIT tests due to error.");
+      return;
+    }
+
     Result result = compileAndRunJUnitTests(config, testFileLocation);
     if (result == null) {
-      System.out.println("Failed to compile the Java classes.");
-      System.exit(1);
+      System.err.println("Failed to compile the Java classes.");
+      return;
     }
 
     float percentageResult = parseJUnitResults(result);

@@ -84,14 +84,12 @@ public class RuntimeChecker {
       } catch (InterruptedException e) {
         // Thread has been interrupted, something has gone wrong.
         success = false;
-        // TODO(Jack): Error handling
         e.printStackTrace();
       }
 
       System.out.println("Closing executable");
       process.destroy();
     } catch (IOException e) {
-      // TODO(Jack): Error handling
       e.printStackTrace();
       success = false;
     }
