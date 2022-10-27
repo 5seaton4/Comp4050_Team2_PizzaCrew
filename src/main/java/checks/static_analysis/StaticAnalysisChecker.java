@@ -72,7 +72,7 @@ public class StaticAnalysisChecker {
       // Read any errors from the attempted command
       if (stdError.readLine() != null) {
         while ((s = stdError.readLine()) != null) {
-          if(s.contains("WARNING: This analysis could be faster")){
+          if (s.contains("WARNING: This analysis could be faster")) {
             continue;
           }
           System.out.println(s);

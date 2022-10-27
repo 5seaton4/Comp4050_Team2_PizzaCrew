@@ -90,35 +90,35 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-      // If the user has passed in multiple projects to be tested then loop over the projects and run
-      // them individually.
-      if (config.isRunMultiple()) {
-        File projectsDir = new File(config.getProjectDirectory());
-        for (File file : projectsDir.listFiles()) {
-          if (!file.isDirectory()) continue;
+    // If the user has passed in multiple projects to be tested then loop over the projects and run
+    // them individually.
+    if (config.isRunMultiple()) {
+      File projectsDir = new File(config.getProjectDirectory());
+      for (File file : projectsDir.listFiles()) {
+        if (!file.isDirectory()) continue;
 
-          config.setProjectDirectory(file.getAbsolutePath());
-          System.out.println("Running tests on project: " + config.getProjectDirectory());
-          config.setTempLocation(
-                  config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
-
-          System.out.println("Exporting processing code to java");
-          Utils.exportProcessingCodeToJava(config);
-          config.setResultsCSVLocation("./" + "Results/" + file.toPath().getFileName() + ".csv");
-          runTests(config);
-        }
-      } else {
+        config.setProjectDirectory(file.getAbsolutePath());
         System.out.println("Running tests on project: " + config.getProjectDirectory());
-        // If the user has only passed in one project.
+        config.setTempLocation(
+            config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
+
         System.out.println("Exporting processing code to java");
         Utils.exportProcessingCodeToJava(config);
-        config.setResultsCSVLocation("./" + "Results/" + "results.csv");
+        config.setResultsCSVLocation("./" + "Results/" + file.toPath().getFileName() + ".csv");
         runTests(config);
       }
+    } else {
+      System.out.println("Running tests on project: " + config.getProjectDirectory());
+      // If the user has only passed in one project.
+      System.out.println("Exporting processing code to java");
+      Utils.exportProcessingCodeToJava(config);
+      config.setResultsCSVLocation("./" + "Results/" + "results.csv");
+      runTests(config);
+    }
 
-      // Clean up the temporary folder.
-      config.removeTemporaryFolder();
-   }
+    // Clean up the temporary folder.
+    config.removeTemporaryFolder();
+  }
 
   /**
    * This function will run the JUNIT tests module.

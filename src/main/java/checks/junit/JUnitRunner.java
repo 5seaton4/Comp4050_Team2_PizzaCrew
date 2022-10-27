@@ -102,7 +102,7 @@ public class JUnitRunner {
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.err.println("Failed to compile JUNIT tests.");
-     }
+    }
 
     return result;
   }

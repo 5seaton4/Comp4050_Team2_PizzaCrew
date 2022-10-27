@@ -144,7 +144,7 @@ public class Utils {
     }
 
     String projectLocation = config.getProjectDirectory();
-    if(config.isRunMultiple()){
+    if (config.isRunMultiple()) {
       File projectDir = new File(config.getProjectDirectory());
       File[] projectDirFiles = projectDir.listFiles();
       int dirCount = 0;
@@ -159,13 +159,12 @@ public class Utils {
 
       if (dirCount != 1) {
         System.err.println(
-                "Error project directory should only contain one folder containing the PDE files.");
+            "Error project directory should only contain one folder containing the PDE files.");
         System.exit(1);
       }
 
       projectLocation = projectDirFiles[dirId].getAbsolutePath();
     }
-
 
     String[] arguments = {
       config.getProcessingLocation(),
