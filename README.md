@@ -1,5 +1,7 @@
 # Comp4050_Team2_PizzaCrew
 
+This project allows the tutors to test their student’s processing projects quickly and efficiently in order to mark their student’s assignments. Therefore, this project allows the tutors to make their test cases and can be able to test them on any processing projects, and the final report will be generated at the end wherein it describes the success or failure of each test case for each student. 
+
 ## 👩‍💻 Setting up
 
 ### 1. Setup the repository Git Hooks
