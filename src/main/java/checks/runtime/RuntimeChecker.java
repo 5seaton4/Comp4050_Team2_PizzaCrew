@@ -69,8 +69,6 @@ public class RuntimeChecker {
       System.exit(1);
     }
 
-    System.out.println("Running executable at " + pathToExecutable);
-
     boolean success = true;
 
     try {
@@ -87,7 +85,6 @@ public class RuntimeChecker {
         e.printStackTrace();
       }
 
-      System.out.println("Closing executable");
       process.destroy();
     } catch (IOException e) {
       e.printStackTrace();

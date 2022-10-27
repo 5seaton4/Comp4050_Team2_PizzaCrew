@@ -10,11 +10,7 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.File;
-
-// Add features
-// Update README
-
-// TODO clean up console output and CSV output
+import me.tongfei.progressbar.*;
 
 /**
  * This class is the main class of the application, all main functions are called from this class.
@@ -59,22 +55,28 @@ public class Main {
     // If the user has specified certain tests run those otherwise run all tests.
     if (config.isRunIndividual()) {
       if (config.isRunRuntimeCheck()) {
+        System.out.println("Runtime Check - Checking that the program does not crash.");
         runtimeCheck(config);
       }
       if (config.isRunStaticAnalysis()) {
+        System.out.println("Static Analysis - Running static analysis tooling over the code.");
         staticAnalysisCheck(config);
       }
     } else {
+      System.out.println("Runtime Check - Checking that the program does not crash");
       runtimeCheck(config);
+      System.out.println("Static Analysis - Running static analysis tooling over the code.");
       staticAnalysisCheck(config);
     }
 
     if (config.getJunitLocation() != null) {
+      System.out.println("JUNIT Tests - Running user defined JUNIT tests");
       runJUNITTests(config);
     }
 
-    System.out.println("Generating a CSV containing the results.");
+    System.out.println("Generating Results At " + config.getResultsCSVLocation());
     ReportMaker.addDataToCSV(config.getResultsCSVLocation());
+    System.out.println("Finished");
   }
 
   /**
@@ -88,30 +90,35 @@ public class Main {
     Config config = new Config();
     setup(args, config);
 
-    // If the user has passed in multiple projects to be tested then loop over the projects and run
-    // them individually.
-    if (config.isRunMultiple()) {
-      File projectsDir = new File(config.getProjectDirectory());
-      for (File file : projectsDir.listFiles()) {
-        if (!file.isDirectory()) continue;
+      // If the user has passed in multiple projects to be tested then loop over the projects and run
+      // them individually.
+      if (config.isRunMultiple()) {
+        File projectsDir = new File(config.getProjectDirectory());
+        for (File file : projectsDir.listFiles()) {
+          if (!file.isDirectory()) continue;
 
-        config.setProjectDirectory(file.getAbsolutePath());
-        config.setTempLocation(
-            config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
+          config.setProjectDirectory(file.getAbsolutePath());
+          System.out.println("Running tests on project: " + config.getProjectDirectory());
+          config.setTempLocation(
+                  config.getTempLocation() + "/" + RandomStringUtils.randomAlphanumeric(8));
 
+          System.out.println("Exporting processing code to java");
+          Utils.exportProcessingCodeToJava(config);
+          config.setResultsCSVLocation("./" + "Results/" + file.toPath().getFileName() + ".csv");
+          runTests(config);
+        }
+      } else {
+        System.out.println("Running tests on project: " + config.getProjectDirectory());
+        // If the user has only passed in one project.
+        System.out.println("Exporting processing code to java");
         Utils.exportProcessingCodeToJava(config);
-        config.setResultsCSVLocation("./" + file.toPath().getFileName() + ".csv");
+        config.setResultsCSVLocation("./" + "Results/" + "results.csv");
         runTests(config);
       }
-    } else {
-      // If the user has only passed in one project.
-      Utils.exportProcessingCodeToJava(config);
-      runTests(config);
-    }
 
-    // Clean up the temporary folder.
-    config.removeTemporaryFolder();
-  }
+      // Clean up the temporary folder.
+      config.removeTemporaryFolder();
+   }
 
   /**
    * This function will run the JUNIT tests module.
@@ -129,7 +136,6 @@ public class Main {
    * @param config the config class which holds all needed config for the application.
    */
   private void staticAnalysisCheck(Config config) {
-    System.out.println("Static Analysis - Running static analysis tooling over the code.");
 
     StaticAnalysisChecker staticAnalysis = new StaticAnalysisChecker();
 
@@ -170,13 +176,8 @@ public class Main {
    * @param config the config class which holds all needed config for the application.
    */
   private void runtimeCheck(Config config) {
-
-    System.out.println("Runtime Check - Checking that the program does not crash.");
     RuntimeChecker runtimeCheck = new RuntimeChecker();
     boolean result = runtimeCheck.runExecutable(config);
-
-    System.out.println("Results: ");
-    System.out.println("\tSuccess: " + result);
 
     TestResult testResult = new TestResult();
     testResult.name = "Runtime Check";

@@ -81,7 +81,10 @@ public class JUnitRunner {
 
     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
     int compilerResult = compiler.run(null, null, null, fileNames);
-    System.out.println("Compiler result code: " + compilerResult);
+    if (compilerResult != 0) {
+      System.out.println("Error compiler result code: " + compilerResult);
+      return null;
+    }
 
     String testFileWithoutExtension = new File(testFile).getName().replaceFirst("[.][^.]+$", "");
 
@@ -99,8 +102,7 @@ public class JUnitRunner {
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
       System.err.println("Failed to compile JUNIT tests.");
-      System.exit(1);
-    }
+     }
 
     return result;
   }
@@ -113,20 +115,6 @@ public class JUnitRunner {
    * @return returns the score calculated from the test results.
    */
   private float parseJUnitResults(Result result) {
-    System.out.println("JUNIT Tests Have Run.");
-    System.out.println("Number of Tests Run: " + result.getRunCount());
-    System.out.println("Number of Failures: " + result.getFailureCount());
-    System.out.println("Number of Ignored Tests: " + result.getIgnoreCount());
-    System.out.println("Total Test Runtime: " + result.getRunTime() + " seconds");
-    System.out.println("Successful: " + result.wasSuccessful());
-
-    if (result.getFailureCount() > 0) {
-      System.out.println("Failures: ");
-      for (Failure failure : result.getFailures()) {
-        System.out.println(failure.toString());
-      }
-    }
-
     return (result.getRunCount() - result.getFailureCount()) / result.getRunCount();
   }
 

@@ -130,8 +130,6 @@ public class Utils {
    * @param config the config class which holds all needed config for the application.
    */
   public static void exportProcessingCodeToJava(Config config) {
-    System.out.println("Exporting processing code to Java.");
-
     String platform = "windows";
     if (config.isMac()) {
       platform = "macosx";
@@ -145,27 +143,33 @@ public class Utils {
       config.removeTemporaryFolder();
     }
 
-    File projectDir = new File(config.getProjectDirectory());
-    File[] projectDirFiles = projectDir.listFiles();
-    int dirCount = 0;
-    int dirId = 0;
-    for (int i = 0; i < projectDirFiles.length; i++) {
-      File file = projectDirFiles[i];
-      if (file.isDirectory()) {
-        dirCount++;
-        dirId = i;
+    String projectLocation = config.getProjectDirectory();
+    if(config.isRunMultiple()){
+      File projectDir = new File(config.getProjectDirectory());
+      File[] projectDirFiles = projectDir.listFiles();
+      int dirCount = 0;
+      int dirId = 0;
+      for (int i = 0; i < projectDirFiles.length; i++) {
+        File file = projectDirFiles[i];
+        if (file.isDirectory()) {
+          dirCount++;
+          dirId = i;
+        }
       }
+
+      if (dirCount != 1) {
+        System.err.println(
+                "Error project directory should only contain one folder containing the PDE files.");
+        System.exit(1);
+      }
+
+      projectLocation = projectDirFiles[dirId].getAbsolutePath();
     }
 
-    if (dirCount != 1) {
-      System.err.println(
-          "Error project directory should only contain one folder containing the PDE files.");
-      System.exit(1);
-    }
 
     String[] arguments = {
       config.getProcessingLocation(),
-      "--sketch=" + projectDirFiles[dirId],
+      "--sketch=" + projectLocation,
       "--output=" + tempPath.toString(),
       "--export",
       "--force",
@@ -180,20 +184,15 @@ public class Utils {
       BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-      // Read the output from the command
-      System.out.println("Processing export output: \n");
       String s = null;
-      while ((s = stdInput.readLine()) != null) {
-        System.out.println(s);
-      }
-
       // Read any errors from the attempted command
-      System.out.println("Process errors of the command (if any):\n");
-      while ((s = stdError.readLine()) != null) {
-        System.out.println(s);
+      if (stdError.readLine() != null) {
+        System.out.println("Process errors of the command:\n");
+        while ((s = stdError.readLine()) != null) {
+          System.out.println(s);
+        }
       }
 
-      System.out.println("Closing process.");
       process.destroy();
 
       // Calculates the app name from the processing folder name.
@@ -213,7 +212,6 @@ public class Utils {
     String contents[] = directory.list();
     boolean found = false;
     for (String folder : contents) {
-      System.out.println(folder);
       if (folder.contains(".app") || folder.contains(".exe")) {
         int endIndex = folder.lastIndexOf(".");
         config.setProjectName(folder.substring(0, endIndex));

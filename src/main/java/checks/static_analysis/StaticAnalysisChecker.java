@@ -64,20 +64,21 @@ public class StaticAnalysisChecker {
       BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-      // Read the output from the command
-      System.out.println("Static Analysis Display\n");
       String s = null;
       while ((s = stdInput.readLine()) != null) {
         result += s;
       }
 
       // Read any errors from the attempted command
-      System.out.println("Process errors of the command (if any):\n");
-      while ((s = stdError.readLine()) != null) {
-        System.out.println(s);
+      if (stdError.readLine() != null) {
+        while ((s = stdError.readLine()) != null) {
+          if(s.contains("WARNING: This analysis could be faster")){
+            continue;
+          }
+          System.out.println(s);
+        }
       }
 
-      System.out.println("Closing executable");
       process.destroy();
     } catch (IOException e) {
       e.printStackTrace();
