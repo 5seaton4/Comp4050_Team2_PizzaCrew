@@ -1,6 +1,7 @@
 package checks.runtime;
 
 import main.Config;
+import reporting.ReportMaker;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class RuntimeChecker {
 
   // In milliseconds - 4000 ms = 3s
-  private static int PROGRAM_RUN_TIME = 4000;
+  private static int PROGRAM_RUN_TIME = 10000;
 
   // The relative location of the executable being tested.
   private String pathToExecutable;
@@ -90,7 +91,7 @@ public class RuntimeChecker {
       e.printStackTrace();
       success = false;
     }
-
+    ReportMaker.runtimeresult = success;
     return success;
   }
 }

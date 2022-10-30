@@ -1,6 +1,7 @@
 package checks.static_analysis;
 
 import main.Config;
+import reporting.ReportMaker;
 
 import java.io.BufferedReader;
 import java.io.File;

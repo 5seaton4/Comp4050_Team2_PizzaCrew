@@ -136,9 +136,9 @@ public class JUnitRunner {
       System.err.println("Failed to compile the Java classes.");
       return;
     }
-
     float percentageResult = parseJUnitResults(result);
 
+    // Test 1 details here
     TestResult testResult = new TestResult();
     testResult.name = "JUNIT Tests";
     testResult.desc = "Result of JUnit tests passed into the program.";

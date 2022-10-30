@@ -17,10 +17,20 @@ public class TestResult {
     // find a *neat* way of checking all variables have been instantiated before running this
     // method.
     String passOrFail;
-    if (result == true) {
-      passOrFail = "Pass";
-    } else {
+    if (!result) {
       passOrFail = "Fail";
+      return ("Test: "
+          + orderOfAppearance
+          + " , "
+          + desc
+          + " , Value: "
+          + value
+          + "% , Mark received: "
+          + passOrFail
+          + " , "
+          + failurecode);
+    } else {
+      passOrFail = "true";
     }
 
     String csvRow =
