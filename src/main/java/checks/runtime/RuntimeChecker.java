@@ -69,8 +69,6 @@ public class RuntimeChecker {
       System.exit(1);
     }
 
-    System.out.println("Running executable at " + pathToExecutable);
-
     boolean success = true;
 
     try {
@@ -84,14 +82,11 @@ public class RuntimeChecker {
       } catch (InterruptedException e) {
         // Thread has been interrupted, something has gone wrong.
         success = false;
-        // TODO(Jack): Error handling
         e.printStackTrace();
       }
 
-      System.out.println("Closing executable");
       process.destroy();
     } catch (IOException e) {
-      // TODO(Jack): Error handling
       e.printStackTrace();
       success = false;
     }

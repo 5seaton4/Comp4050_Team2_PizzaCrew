@@ -1,15 +1,15 @@
 package reporting;
 
-// TODO add that it is optional to pass in value and result.
-
+/**
+ * This class is responsible for holding the test results of the test module which then gets passed
+ * to the ReportMaker class to be turned into a CSV.
+ */
 public class TestResult {
-  // TODO these variables need to be accessed via getters and setters.
   public String name; // name of test (if provided and relevant)
   public String desc; // description of test (if provided and relevant)
   public float value = -1; // mark value of test
   public boolean result; // result of test mark, pass or fail (true/false)
   public boolean numberResult;
-  // TODO what is this can we remove it.
   public int orderOfAppearance; // appearance order of the test
   public String testOutput;
 

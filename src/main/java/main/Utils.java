@@ -10,7 +10,18 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * This class is responsible for holding utility functions that are used else where in the program.
+ */
 public class Utils {
+
+  /**
+   * This function will parse the command line arguments passed in by the user and will set
+   * variables in the config class to be used elsewhere in the program.
+   *
+   * @param args the arguments passed in by the User.
+   * @param config the config class which holds all needed config for the application.
+   */
   public static void parseCommandLineArguments(String[] args, Config config) {
     Options options = new Options();
 
@@ -52,6 +63,7 @@ public class Utils {
     HelpFormatter formatter = new HelpFormatter();
     CommandLine cmd = null;
 
+    // Try to parse the command line, if there are errors then print the help message.
     try {
       cmd = parser.parse(options, args);
     } catch (ParseException e) {
@@ -111,9 +123,13 @@ public class Utils {
     }
   }
 
+  /**
+   * This function will export the processing code to java. It will also create the temporary
+   * location that the files will go into.
+   *
+   * @param config the config class which holds all needed config for the application.
+   */
   public static void exportProcessingCodeToJava(Config config) {
-    System.out.println("Exporting processing code to Java.");
-
     String platform = "windows";
     if (config.isMac()) {
       platform = "macosx";
@@ -122,30 +138,37 @@ public class Utils {
     // Create a temp directory for the java code.
     Path tempPath = Paths.get(config.getTempLocation());
 
-    // TODO Remove the temp location if it is already there.
-    // TODO Or warn the user what the issue is.
-
-    File projectDir = new File(config.getProjectDirectory());
-    File[] projectDirFiles = projectDir.listFiles();
-    int dirCount = 0;
-    int dirId = 0;
-    for (int i = 0; i < projectDirFiles.length; i++) {
-      File file = projectDirFiles[i];
-      if (file.isDirectory()) {
-        dirCount++;
-        dirId = i;
-      }
+    File tempFilePath = new File(config.getTempLocation());
+    if (tempFilePath.isDirectory()) {
+      config.removeTemporaryFolder();
     }
 
-    if (dirCount != 1) {
-      System.err.println(
-          "Error project directory should only contain one folder containing the PDE files.");
-      System.exit(1);
+    String projectLocation = config.getProjectDirectory();
+    if (config.isRunMultiple()) {
+      File projectDir = new File(config.getProjectDirectory());
+      File[] projectDirFiles = projectDir.listFiles();
+      int dirCount = 0;
+      int dirId = 0;
+      for (int i = 0; i < projectDirFiles.length; i++) {
+        File file = projectDirFiles[i];
+        if (file.isDirectory()) {
+          dirCount++;
+          dirId = i;
+        }
+      }
+
+      if (dirCount != 1) {
+        System.err.println(
+            "Error project directory should only contain one folder containing the PDE files.");
+        System.exit(1);
+      }
+
+      projectLocation = projectDirFiles[dirId].getAbsolutePath();
     }
 
     String[] arguments = {
       config.getProcessingLocation(),
-      "--sketch=" + projectDirFiles[dirId],
+      "--sketch=" + projectLocation,
       "--output=" + tempPath.toString(),
       "--export",
       "--force",
@@ -160,35 +183,34 @@ public class Utils {
       BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-      // Read the output from the command
-      System.out.println("Processing export output: \n");
       String s = null;
-      while ((s = stdInput.readLine()) != null) {
-        System.out.println(s);
-      }
-
       // Read any errors from the attempted command
-      System.out.println("Process errors of the command (if any):\n");
-      while ((s = stdError.readLine()) != null) {
-        System.out.println(s);
+      if (stdError.readLine() != null) {
+        System.out.println("Process errors of the command:\n");
+        while ((s = stdError.readLine()) != null) {
+          System.out.println(s);
+        }
       }
 
-      System.out.println("Closing process.");
       process.destroy();
 
+      // Calculates the app name from the processing folder name.
       Utils.getAppNameFromExecutable(config);
     } catch (IOException e) {
-      // TODO(Jack): Error handling
       e.printStackTrace();
     }
   }
 
+  /**
+   * This function will get the app name from the processing folder name.
+   *
+   * @param config the config class which holds all needed config for the application.
+   */
   private static void getAppNameFromExecutable(Config config) {
     File directory = new File(config.getTempLocation());
     String contents[] = directory.list();
     boolean found = false;
     for (String folder : contents) {
-      System.out.println(folder);
       if (folder.contains(".app") || folder.contains(".exe")) {
         int endIndex = folder.lastIndexOf(".");
         config.setProjectName(folder.substring(0, endIndex));
