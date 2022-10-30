@@ -24,6 +24,7 @@ public class ReportMaker {
   public static void addFailureReasons(String failreason) {
     failurecodes.add(failreason);
   }
+
   public static void addDataToReport(
       TestResult
           tRO) { // todo is this appropriate or should we reference "results.add" statically? TBD
@@ -79,7 +80,7 @@ public class ReportMaker {
       for (int i = 0; i < SAResults.size() - 1; i++) {
         if (i
             > 11) { // skips import statements as these are made by processing-java and not relevant
-                    // to student
+          // to student
           String row = (SAResults.get(i));
           String[] rowdata = row.split(" ");
           data.add(rowdata);
@@ -106,7 +107,7 @@ public class ReportMaker {
       data.add(titleadd);
 
       if (failurecodes.size() > 0) {
-        for (int y = 0 ; y<failurecodes.size();y++){
+        for (int y = 0; y < failurecodes.size(); y++) {
           titleadd = failurecodes.get(y).split(" ");
           data.add(titleadd);
         }

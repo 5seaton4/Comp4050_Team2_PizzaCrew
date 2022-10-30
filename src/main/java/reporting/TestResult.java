@@ -8,6 +8,7 @@ public class TestResult {
   public boolean result; // result of test mark, pass or fail (true/false)
   public int orderOfAppearance; // appearance order of the test
   public String failurecode;
+
   public String returnFormatted() {
     // find a *neat* way of checking all variables have been instantiated before running this
     // method.
@@ -15,26 +16,25 @@ public class TestResult {
     if (!result) {
       passOrFail = "Fail";
       return ("Test: "
-              + orderOfAppearance
-              + " , "
-              + desc
-              + " , Value: "
-              + value
-              + "% , Mark received: "
-              + passOrFail
-              + " , "
-              + failurecode
-      );
+          + orderOfAppearance
+          + " , "
+          + desc
+          + " , Value: "
+          + value
+          + "% , Mark received: "
+          + passOrFail
+          + " , "
+          + failurecode);
+    } else {
+      passOrFail = "true";
     }
-    else { passOrFail = "true";}
-      return ("Test: "
-            + orderOfAppearance
-            + " , "
-            + desc
-            + " , Value: "
-            + value
-            + "% , Mark received: "
-            + passOrFail
-            );
+    return ("Test: "
+        + orderOfAppearance
+        + " , "
+        + desc
+        + " , Value: "
+        + value
+        + "% , Mark received: "
+        + passOrFail);
   }
 }
