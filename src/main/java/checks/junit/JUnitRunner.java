@@ -92,7 +92,6 @@ public class JUnitRunner {
       System.out.println("Failures: ");
       for (Failure failure : result.getFailures()) {
         System.out.println(failure.toString());
-        ReportMaker.addFailureReasons(failure.toString());
       }
     }
 
@@ -107,14 +106,18 @@ public class JUnitRunner {
       System.out.println("Failed to compile the Java classes.");
       System.exit(1);
     }
-
     float percentageResult = parseJUnitResults(result);
 
+   // Test 1 details here
     TestResult testResult = new TestResult();
     testResult.name = "JUNIT Tests";
     testResult.desc = "Result of JUnit tests passed into the program.";
     testResult.value = percentageResult;
     testResult.result = (percentageResult >= 50) ? true : false;
+    if (!testResult.result) {
+      testResult.failurecode = result.getFailures().get(0).toString();
+    }
     ReportMaker.addDataToReport(testResult);
   }
+
 }

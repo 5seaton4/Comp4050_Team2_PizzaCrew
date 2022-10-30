@@ -11,4 +11,12 @@ public class TestFile {
   public void testFail() {
     assertEquals(true,false);
   }
+  @Test
+  public void intTest() {
+    assertEquals(1,1);
+  }
+  public void testFail2() {
+    assertEquals(1,2);
+  }
+
 }

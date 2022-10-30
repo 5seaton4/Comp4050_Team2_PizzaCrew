@@ -12,9 +12,8 @@ public class TestResult {
     // find a *neat* way of checking all variables have been instantiated before running this
     // method.
     String passOrFail;
-    if (result == false) {
+    if (!result) {
       passOrFail = "Fail";
-      /*
       return ("Test: "
               + orderOfAppearance
               + " , "
@@ -23,28 +22,19 @@ public class TestResult {
               + value
               + "% , Mark received: "
               + passOrFail
-              + "Failure reason:,"
-              + failurecode);
-       */
+              + " , "
+              + failurecode
+      );
     }
-    else {passOrFail = "Pass";}
-    /*
-    return ("Test: "
+    else { passOrFail = "true";}
+      return ("Test: "
             + orderOfAppearance
             + " , "
             + desc
             + " , Value: "
             + value
             + "% , Mark received: "
-            + passOrFail);
-     */
-    return ("Test: "
-            + orderOfAppearance
-            + " , "
-            + desc
-            + " , Value: "
-            + value
-            + "% , Mark received: "
-            + passOrFail);
+            + passOrFail
+            );
   }
 }
