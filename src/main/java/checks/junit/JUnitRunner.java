@@ -115,7 +115,7 @@ public class JUnitRunner {
    * @return returns the score calculated from the test results.
    */
   private float parseJUnitResults(Result result) {
-    return (result.getRunCount() - result.getFailureCount()) / result.getRunCount();
+    return ((float)result.getRunCount() - (float)result.getFailureCount()) / (float)result.getRunCount();
   }
 
   /**
@@ -136,25 +136,26 @@ public class JUnitRunner {
       System.err.println("Failed to compile the Java classes.");
       return;
     }
-    float percentageResult = parseJUnitResults(result);
+    float percentageResult = parseJUnitResults(result) * 100;
 
     // Test 1 details here
     TestResult testResult = new TestResult();
     testResult.name = "JUNIT Tests";
     testResult.desc = "Result of JUnit tests passed into the program.";
-    testResult.value = percentageResult;
+    testResult.value = String.valueOf(percentageResult);
     testResult.result = (percentageResult >= 50) ? true : false;
+    testResult.numberResult = true;
     testResult.testOutput = "";
-    testResult.testOutput += "Number of Tests Run: " + result.getRunCount();
-    testResult.testOutput += "Number of Failures: " + result.getFailureCount();
-    testResult.testOutput += "Number of Ignored Tests: " + result.getIgnoreCount();
-    testResult.testOutput += "Total Test Runtime: " + result.getRunTime() + " seconds";
-    testResult.testOutput += "Successful: " + result.wasSuccessful();
+    testResult.testOutput += "Number of Tests Run: " + result.getRunCount() + " ";
+    testResult.testOutput += "Number of Failures: " + result.getFailureCount() + " ";
+    testResult.testOutput += "Number of Ignored Tests: " + result.getIgnoreCount() + " ";
+    testResult.testOutput += "Total Test Runtime: " + result.getRunTime() + " seconds ";
+    testResult.testOutput += "Successful: " + result.wasSuccessful() + " ";
 
     if (result.getFailureCount() > 0) {
       testResult.testOutput += "Failures: ";
       for (Failure failure : result.getFailures()) {
-        testResult.testOutput += failure.toString();
+        testResult.testOutput += failure.toString() + " ";
       }
     }
 

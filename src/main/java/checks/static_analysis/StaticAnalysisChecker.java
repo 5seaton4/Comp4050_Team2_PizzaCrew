@@ -66,8 +66,13 @@ public class StaticAnalysisChecker {
       BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
       String s = null;
+      int count = 0;
       while ((s = stdInput.readLine()) != null) {
-        result += s;
+        //Remove unused import from result
+        if (count > 11) {
+          result += s + " ";
+        }
+        count++;
       }
 
       // Read any errors from the attempted command

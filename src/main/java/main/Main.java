@@ -10,7 +10,6 @@ import reporting.ReportMaker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.File;
-import me.tongfei.progressbar.*;
 
 /**
  * This class is the main class of the application, all main functions are called from this class.
@@ -76,6 +75,7 @@ public class Main {
 
     System.out.println("Generating Results At " + config.getResultsCSVLocation());
     ReportMaker.addDataToCSV(config.getResultsCSVLocation());
+    ReportMaker.reset();
     System.out.println("Finished");
   }
 
@@ -94,6 +94,7 @@ public class Main {
     // them individually.
     if (config.isRunMultiple()) {
       File projectsDir = new File(config.getProjectDirectory());
+      String oldTempLocation = config.getTempLocation();
       for (File file : projectsDir.listFiles()) {
         if (!file.isDirectory()) continue;
 
@@ -107,6 +108,8 @@ public class Main {
         config.setResultsCSVLocation("./" + "Results/" + file.toPath().getFileName() + ".csv");
         runTests(config);
       }
+      //Remove entire temp folder
+      config.setTempLocation(oldTempLocation);
     } else {
       System.out.println("Running tests on project: " + config.getProjectDirectory());
       // If the user has only passed in one project.
@@ -183,6 +186,9 @@ public class Main {
     testResult.name = "Runtime Check";
     testResult.desc = "The program is run to ascertain whether there is any runtime errors.";
     testResult.result = true;
+    testResult.value = "N/A";
+    testResult.testOutput = "N/A";
+    testResult.numberResult = true;
     ReportMaker.addDataToReport(testResult);
   }
 }
