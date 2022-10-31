@@ -1,6 +1,26 @@
 # Comp4050_Team2_PizzaCrew
 
 This project allows the tutors to test their student’s processing projects quickly and efficiently in order to mark their student’s assignments. Therefore, this project allows the tutors to make their test cases and can be able to test them on any processing projects, and the final report will be generated at the end wherein it describes the success or failure of each test case for each student. 
+Currently this program implements 3 types of tests:
+- Runtime Test
+  - The testable program will be run to check for any runtime errors.
+- Static Analysis
+  - The static analysis tool PMD will be run on the code.
+- JUNIT Tests
+  - JUNIT tests provided by the user will be run.
+
+## External Programs / Libraries Used
+
+- JUNIT
+  - Licence: Eclipse Public License 1.0
+- PMD
+    - Licence: Apache License
+- Maven
+    - Licence: Apache License
+- Apache Commons CLI
+    - Licence: Apache License
+- OpenCSV
+    - Licence: Apache Licence
 
 ## 👩‍💻 Setting up
 
@@ -41,8 +61,9 @@ Information on Maven and its conventions can be found below.
 To run the application you can go into the target/ directory and run the JAR file using Java.
 An example command with the required arguments is:
 
-        java -jar hawaiian-0.1.0.jar -p "/Users/Jack/processing-java" -t "/Users/Jack/Documents/Processing/Flocking"
+        java -jar hawaiian-0.1.0.jar -p "/Users/Jack/processing-java" -t "/Users/Jack/Documents/Processing/Flocking" -j "/Volumes/projects/Comp4050_Team2_PizzaCrew/test_artifacts/TestFile.java"
 
+Running the program with no arguments will show a help menu with the required fields.
 
 You must have processing-java installed to install it open Processing then Tools and select 'Install process-java'.
 
