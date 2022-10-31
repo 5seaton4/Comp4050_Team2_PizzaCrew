@@ -138,3 +138,12 @@ Mavens convention for tests is that they should be located in the src/test/java/
 # Documentation
 
 - Documentation should be recorded within Confluence: "https://comp4050-team2.atlassian.net/wiki/spaces/PIZZACREW/overview"
+
+# Acknowledgements
+
+The following people have contributed to the repository:
+ - Jack
+ - Ethan
+ - Abhinav
+ - Priyanshi
+ - Aashir
